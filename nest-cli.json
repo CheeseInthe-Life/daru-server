@@ -1,0 +1,76 @@
+{
+  "$schema": "https://json.schemastore.org/nest-cli",
+  "collection": "@nestjs/schematics",
+  "sourceRoot": "apps/daru-server/src",
+  "monorepo": true,
+  "root": "apps/daru-server",
+  "compilerOptions": {
+    "webpack": true,
+    "tsConfigPath": "apps/daru-server/tsconfig.app.json"
+  },
+  "projects": {
+    "admin": {
+      "type": "application",
+      "root": "apps/admin",
+      "entryFile": "main",
+      "sourceRoot": "apps/admin/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/admin/tsconfig.app.json"
+      }
+    },
+    "customer": {
+      "type": "application",
+      "root": "apps/customer",
+      "entryFile": "main",
+      "sourceRoot": "apps/customer/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/customer/tsconfig.app.json"
+      }
+    },
+    "manager": {
+      "type": "application",
+      "root": "apps/manager",
+      "entryFile": "main",
+      "sourceRoot": "apps/manager/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/manager/tsconfig.app.json"
+      }
+    },
+    "aws": {
+      "type": "library",
+      "root": "libs/aws",
+      "entryFile": "index",
+      "sourceRoot": "libs/aws/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/aws/tsconfig.lib.json"
+      }
+    },
+    "auth": {
+      "type": "library",
+      "root": "libs/auth",
+      "entryFile": "index",
+      "sourceRoot": "libs/auth/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/auth/tsconfig.lib.json"
+      }
+    },
+    "persistence": {
+      "type": "library",
+      "root": "libs/persistence",
+      "entryFile": "index",
+      "sourceRoot": "libs/persistence/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/persistence/tsconfig.lib.json"
+      }
+    },
+    "domain": {
+      "type": "application",
+      "root": "apps/domain",
+      "entryFile": "main",
+      "sourceRoot": "apps/domain/src",
+      "compilerOptions": {
+        "tsConfigPath": "apps/domain/tsconfig.app.json"
+      }
+    }
+  }
+}
