@@ -10,6 +10,7 @@
     "build": "nest build",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
+    "start:customer": "nest start customer --watch",
     "start:dev": "nest start --watch",
     "start:debug": "nest start --debug --watch",
     "start:prod": "node dist/main",
@@ -18,17 +19,28 @@
     "test:watch": "jest --watch",
     "test:cov": "jest --coverage",
     "test:debug": "node --inspect-brk -r tsconfig-paths/register -r ts-node/register node_modules/.bin/jest --runInBand",
-    "test:e2e": "jest --config ./apps/daru-server/test/jest-e2e.json"
+    "test:e2e": "jest --config ./apps/daru-server/test/jest-e2e.json",
+    "typeorm": "node -r tsconfig-paths/register -r ts-node/register ./node_modules/typeorm/cli.js --config ormconfig.ts",
+    "migration:create": "yarn typeorm migration:create -n",
+    "migration:generate": "yarn typeorm migration:generate -n",
+    "migration:revert": "yarn typeorm migration:revert"
   },
   "dependencies": {
+    "@nestjs/axios": "^0.0.8",
     "@nestjs/common": "^8.0.0",
+    "@nestjs/config": "^2.0.1",
     "@nestjs/core": "^8.0.0",
     "@nestjs/passport": "^8.2.1",
     "@nestjs/platform-express": "^8.0.0",
+    "@nestjs/swagger": "^5.2.1",
+    "@nestjs/typeorm": "^8.0.4",
+    "mysql2": "^2.3.3",
     "passport-kakao": "^1.0.1",
     "reflect-metadata": "^0.1.13",
     "rimraf": "^3.0.2",
-    "rxjs": "^7.2.0"
+    "rxjs": "^7.2.0",
+    "typeorm": "^0.2.45",
+    "typeorm-naming-strategies": "^4.1.0"
   },
   "devDependencies": {
     "@nestjs/cli": "^8.0.0",
@@ -76,8 +88,9 @@
     ],
     "moduleNameMapper": {
       "^@infra/aws(|/.*)$": "<rootDir>/libs/aws/src/$1",
-      "^@auth/auth(|/.*)$": "<rootDir>/libs/auth/src/$1",
-      "^@infra/persistence(|/.*)$": "<rootDir>/libs/persistence/src/$1"
+      "^@infra/auth-strategy(|/.*)$": "<rootDir>/libs/auth-strategy/src/$1",
+      "^@domain/domain-user(|/.*)$": "<rootDir>/libs/domain-user/src/$1",
+      "^@persistence/persistence(|/.*)$": "<rootDir>/libs/persistence/src/$1"
     }
   }
 }

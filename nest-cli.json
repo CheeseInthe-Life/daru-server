@@ -5,7 +5,7 @@
   "monorepo": true,
   "root": "apps/daru-server",
   "compilerOptions": {
-    "webpack": true,
+    "webpack": false,
     "tsConfigPath": "apps/daru-server/tsconfig.app.json"
   },
   "projects": {
@@ -45,13 +45,22 @@
         "tsConfigPath": "libs/aws/tsconfig.lib.json"
       }
     },
-    "auth": {
+    "auth-strategy": {
       "type": "library",
-      "root": "libs/auth",
+      "root": "libs/auth-strategy",
       "entryFile": "index",
-      "sourceRoot": "libs/auth/src",
+      "sourceRoot": "libs/auth-strategy/src",
       "compilerOptions": {
-        "tsConfigPath": "libs/auth/tsconfig.lib.json"
+        "tsConfigPath": "libs/auth-strategy/tsconfig.lib.json"
+      }
+    },
+    "domain-user": {
+      "type": "library",
+      "root": "libs/domain-user",
+      "entryFile": "index",
+      "sourceRoot": "libs/domain-user/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/domain-user/tsconfig.lib.json"
       }
     },
     "persistence": {
@@ -61,15 +70,6 @@
       "sourceRoot": "libs/persistence/src",
       "compilerOptions": {
         "tsConfigPath": "libs/persistence/tsconfig.lib.json"
-      }
-    },
-    "domain": {
-      "type": "application",
-      "root": "apps/domain",
-      "entryFile": "main",
-      "sourceRoot": "apps/domain/src",
-      "compilerOptions": {
-        "tsConfigPath": "apps/domain/tsconfig.app.json"
       }
     }
   }

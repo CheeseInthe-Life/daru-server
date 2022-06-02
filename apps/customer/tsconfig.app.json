@@ -4,6 +4,6 @@
     "declaration": false,
     "outDir": "../../dist/apps/customer"
   },
-  "include": ["src/**/*"],
+  "include": ["src/**/*", "../../libs/persistence/src/migration/*"],
   "exclude": ["node_modules", "dist", "test", "**/*spec.ts"]
 }

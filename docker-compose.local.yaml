@@ -1,0 +1,33 @@
+version: '3.7'
+
+services:
+  mysql_local:
+    container_name: mysql_local
+    platform: linux/x86_64
+    image: mysql:8.0.29
+    ports:
+      - '33060:3306'
+    environment:
+      - MYSQL_DATABASE=daru
+      - MYSQL_ROOT_PASSWORD=daru_password
+      - MYSQL_USER=wooming
+      - MYSQL_PASSWORD=local_password
+      - TZ=Asia/Seoul
+    command:
+      - --character-set-server=utf8mb4
+    volumes:
+      - ./docker/.mysql/conf.d:/etc/mysql/conf.d
+      - ./docker/.mysql/data:/var/lib/mysql
+
+  redis_local:
+    image: redis:7.0.0
+    command: redis-server --port 6379
+    container_name: redis_local
+    hostname: redis_local
+    labels:
+      - 'name=redis_local'
+      - 'mode=standalone'
+    ports:
+      - 6379:6379
+    volumes:
+      - ./docker/.redis/data:/var/lib/redis

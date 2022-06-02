@@ -18,24 +18,22 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@infra/aws": [
-        "libs/aws/src"
-      ],
-      "@infra/aws/*": [
-        "libs/aws/src/*"
-      ],
-      "@auth/auth": [
-        "libs/auth/src"
-      ],
-      "@auth/auth/*": [
-        "libs/auth/src/*"
-      ],
-      "@infra/persistence": [
-        "libs/persistence/src"
-      ],
-      "@infra/persistence/*": [
-        "libs/persistence/src/*"
-      ]
+      "@infra/aws": ["libs/aws/src"],
+      "@infra/aws/*": ["libs/aws/src/*"],
+      "@auth/auth": ["libs/auth/src"],
+      "@auth/auth/*": ["libs/auth/src/*"],
+      "@infra/persistence": ["libs/persistence/src"],
+      "@infra/persistence/*": ["libs/persistence/src/*"],
+      "@domain/user": ["libs/user/src"],
+      "@domain/user/*": ["libs/user/src/*"],
+      "@infra/auth-strategy": ["libs/auth-strategy/src"],
+      "@infra/auth-strategy/*": ["libs/auth-strategy/src/*"],
+      "@domain/domain-user": ["libs/domain-user/src"],
+      "@domain/domain-user/*": ["libs/domain-user/src/*"],
+      "@persistence/persistence-user": ["libs/persistence-user/src"],
+      "@persistence/persistence-user/*": ["libs/persistence-user/src/*"],
+      "@persistence/persistence": ["libs/persistence/src"],
+      "@persistence/persistence/*": ["libs/persistence/src/*"]
     }
   }
 }
