@@ -1,7 +1,9 @@
 import { ProviderChannelEnum } from '@domain/domain-user/entity/user';
 import { Column, Entity, PrimaryColumn } from 'typeorm';
 
-@Entity()
+@Entity({
+  name: 'user',
+})
 export class UserEntity {
   @PrimaryColumn()
   userId: string;

@@ -3,7 +3,7 @@ import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
 import { UserFacade } from 'apps/customer/src/application/user.facade';
 import { CommonResponse } from '../../common/response/common-response';
 
-@Controller('api/v1/users')
+@Controller('api/users')
 export class UserController {
   constructor(private readonly userFacade: UserFacade) {}
 
