@@ -1,22 +1,19 @@
-import { ProviderChannelEnum, User } from '../entity/user';
+import { User } from '../entity/user';
+
+export interface TokenPair {
+  accessToken: string;
+  refreshToken: string;
+}
 
 export class UserMainInfo {
   userId: string;
   providerId: string;
-  providerName: ProviderChannelEnum;
   email: string;
   nickname: string;
 
-  private constructor({
-    userId,
-    providerId,
-    providerName,
-    email,
-    nickname,
-  }: User) {
+  private constructor({ userId, providerId, email, nickname }: User) {
     this.userId = userId;
     this.providerId = providerId;
-    this.providerName = providerName;
     this.email = email;
     this.nickname = nickname;
   }
