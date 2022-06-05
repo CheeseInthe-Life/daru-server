@@ -3,8 +3,12 @@ import { Logger } from '@nestjs/common';
 import { registerAs } from '@nestjs/config';
 import { JwtSignOptions } from '@nestjs/jwt';
 
-const { JWT_ISSUER, JWT_SECRET, JWT_ACCESS_EXPIRE, JWT_REFRESH_EXPIRE } =
-  process.env;
+const {
+  CUSTOMER_JWT_ISSUER,
+  CUSTOMER_JWT_SECRET,
+  CUSTOMER_JWT_ACCESS_EXPIRE,
+  CUSTOMER_JWT_REFRESH_EXPIRE,
+} = process.env;
 
 export interface jwtConfigInterface {
   access: JwtSignOptions;
@@ -12,15 +16,18 @@ export interface jwtConfigInterface {
 }
 
 const baseOptions: JwtSignOptions = {
-  issuer: JWT_ISSUER as string,
-  secret: JWT_SECRET as string,
+  issuer: CUSTOMER_JWT_ISSUER as string,
+  secret: CUSTOMER_JWT_SECRET as string,
 };
 
 export default registerAs('jwt', (): jwtConfigInterface => {
   Logger.debug('JwtConfig Loader');
 
   return {
-    access: { ...baseOptions, expiresIn: JWT_ACCESS_EXPIRE as string },
-    refresh: { ...baseOptions, expiresIn: JWT_REFRESH_EXPIRE as string },
+    access: { ...baseOptions, expiresIn: CUSTOMER_JWT_ACCESS_EXPIRE as string },
+    refresh: {
+      ...baseOptions,
+      expiresIn: CUSTOMER_JWT_REFRESH_EXPIRE as string,
+    },
   };
 });

@@ -6,11 +6,13 @@ import { AuthModule } from './auth.module';
 import { UserModule } from './user.module';
 import { JwtModule } from '@nestjs/jwt';
 import databaseConfig from 'configuration/database.config';
+import { validate } from 'configuration/costomer.env.validation';
 @Module({
   imports: [
     ConfigModule.forRoot({
       load: [databaseConfig],
       isGlobal: true,
+      validate,
     }),
     TypeOrmModule.forRootAsync({
       imports: [ConfigModule],
