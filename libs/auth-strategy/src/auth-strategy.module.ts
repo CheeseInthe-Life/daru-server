@@ -1,8 +1,11 @@
+import { PersistenceModule } from '@infra/persistence';
 import { Module } from '@nestjs/common';
-import { KakaoStrategyService } from './kakao-strategy.service';
+import { JwtModule } from '@nestjs/jwt';
+import { KakaoStrategy } from './kakao-strategy.service';
 
 @Module({
-  providers: [KakaoStrategyService],
-  exports: [KakaoStrategyService],
+  imports: [PersistenceModule, JwtModule],
+  providers: [KakaoStrategy],
+  exports: [KakaoStrategy],
 })
 export class AuthStrategyModule {}

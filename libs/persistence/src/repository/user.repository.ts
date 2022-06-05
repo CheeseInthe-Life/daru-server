@@ -10,20 +10,28 @@ export class UserRepositoryImpl implements UserRepository {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
   ) {}
-  async findUserByUserId({ userId }: { userId: string }): Promise<User> {
-    const userEntity: UserEntity = await this.userRepository.findOneOrFail({
-      where: { userId },
+  async findUserByProviderId({
+    providerId,
+  }: {
+    providerId: string;
+  }): Promise<User> {
+    return await this.userRepository.findOneOrFail({
+      providerId,
     });
-    return User.of(userEntity);
   }
+
+  async findUserByUserId({ userId }: { userId: string }): Promise<User> {
+    return User.of(await this.userRepository.findOneOrFail({ userId }));
+  }
+
   async findUserList(): Promise<User[]> {
     const userEntityList: UserEntity[] = await this.userRepository.find();
     return userEntityList.map((userEntity) => {
       return User.of(userEntity);
     });
   }
+
   async store(user: User): Promise<User> {
-    const userEntity: UserEntity = await this.userRepository.save(user);
-    return User.of(userEntity);
+    return User.of(await this.userRepository.save(user));
   }
 }
