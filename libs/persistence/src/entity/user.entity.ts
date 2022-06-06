@@ -5,15 +5,16 @@ import {
   CreateDateColumn,
   DeleteDateColumn,
   Entity,
+  Index,
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
 import { DateTimeUtil } from '../util/date-time-util';
-import { LocalDateTimeTransformer } from '../util/transformer';
 
 @Entity({
   name: 'user',
 })
+@Index(['nickname'], { unique: true })
 export class UserEntity {
   @PrimaryColumn({ length: 32 })
   userId: string;
@@ -22,11 +23,6 @@ export class UserEntity {
     length: 128,
   })
   providerId: string;
-
-  @Column({
-    length: 64,
-  })
-  email: string;
 
   @Column({
     length: 16,

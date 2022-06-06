@@ -10,6 +10,12 @@ export class UserRepositoryImpl implements UserRepository {
     @InjectRepository(UserEntity)
     private readonly userRepository: Repository<UserEntity>,
   ) {}
+  async findUserByNickname({ nickname }: { nickname: string }): Promise<User> {
+    return await this.userRepository.findOneOrFail({
+      nickname,
+    });
+  }
+
   async findUserByProviderId({
     providerId,
   }: {

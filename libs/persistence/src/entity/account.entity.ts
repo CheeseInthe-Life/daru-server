@@ -4,7 +4,6 @@ import {
   CreateDateColumn,
   Entity,
   Index,
-  PrimaryColumn,
   PrimaryGeneratedColumn,
   UpdateDateColumn,
 } from 'typeorm';
@@ -40,6 +39,11 @@ export class AccountEntity {
   providerName: ProviderChannelEnum;
 
   @Column({
+    length: 32,
+  })
+  username: string;
+
+  @Column({
     length: 16,
   })
   status: AccountStatusEnum;
@@ -71,16 +75,19 @@ export class AccountEntity {
     providerId,
     providerName,
     connectedAt,
+    username,
   }: {
     providerId: string;
     providerName: ProviderChannelEnum;
     connectedAt: LocalDateTime;
+    username: string;
   }): AccountEntity {
     const account = new AccountEntity();
     account.providerId = providerId;
     account.providerName = providerName;
     account.status = AccountStatusEnum.계정연결;
     account.connectedAt = connectedAt;
+    account.username = username;
 
     return account;
   }
@@ -94,7 +101,7 @@ export class AccountEntity {
     this.status = AccountStatusEnum.계정탈퇴;
   }
 
-  completedSignUp() {
+  completeSignUp() {
     this.status = AccountStatusEnum.가입완료;
   }
 

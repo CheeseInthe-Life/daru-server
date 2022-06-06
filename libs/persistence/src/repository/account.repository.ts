@@ -6,11 +6,15 @@ import { AccountEntity, ProviderChannelEnum } from '../entity/account.entity';
 export class AccountRepositoryImpl {
   constructor(
     @InjectRepository(AccountEntity)
-    private readonly AccountRepository: Repository<AccountEntity>,
+    private readonly accountRepository: Repository<AccountEntity>,
   ) {}
 
   async store(Account: AccountEntity): Promise<AccountEntity> {
-    return this.AccountRepository.save(Account);
+    return this.accountRepository.save(Account);
+  }
+
+  async findAccountByAccountId({ accountId }: { accountId: number }) {
+    return this.accountRepository.findOneOrFail({ accountId });
   }
 
   async findAccountByProviderIdAndProviderName({
@@ -20,7 +24,7 @@ export class AccountRepositoryImpl {
     providerId: string;
     providerName: ProviderChannelEnum;
   }): Promise<AccountEntity> {
-    return this.AccountRepository.findOneOrFail({
+    return this.accountRepository.findOneOrFail({
       providerId,
       providerName,
     });

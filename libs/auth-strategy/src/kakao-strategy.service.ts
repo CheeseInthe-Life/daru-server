@@ -51,6 +51,7 @@ export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
   ) {
     const providerId = String(kakaoProfile.id);
     const providerName = ProviderChannelEnum.카카오;
+    const username = kakaoProfile.username;
 
     const account = await this.accountRepository
       .findAccountByProviderIdAndProviderName({
@@ -66,6 +67,7 @@ export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
               connectedAt: DateTimeUtil.toLocalDateTime(
                 kakaoProfile._json.connected_at,
               ),
+              username,
             }),
           );
         } else {

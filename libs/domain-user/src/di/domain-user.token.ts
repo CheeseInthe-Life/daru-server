@@ -1,4 +1,7 @@
 export class UserDIToken {
+  // Service
+  public static readonly UserService: unique symbol = Symbol('UserService');
+
   // Repository
   public static readonly UserRepository: unique symbol =
     Symbol('UserRepository');

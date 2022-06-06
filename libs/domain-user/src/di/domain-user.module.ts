@@ -1,10 +1,18 @@
 import { PersistenceModule } from '@infra/persistence';
-import { Module } from '@nestjs/common';
-import { DomainUserService } from '../service/domain-user.service';
+import { Module, Provider } from '@nestjs/common';
+import { UserServiceImpl } from '../service/domain-user.service';
+import { UserDIToken } from './domain-user.token';
+
+const serviceProviders: Provider[] = [
+  {
+    provide: UserDIToken.UserService,
+    useClass: UserServiceImpl,
+  },
+];
 
 @Module({
   imports: [PersistenceModule],
-  providers: [DomainUserService],
-  exports: [DomainUserService],
+  providers: [...serviceProviders],
+  exports: [...serviceProviders],
 })
 export class DomainUserModule {}
