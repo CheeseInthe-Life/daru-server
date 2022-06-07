@@ -9,6 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import { ApiResponse } from '@nestjs/swagger';
 import { AuthFacade } from 'apps/customer/src/application/auth.facade';
 import { Request } from 'express';
 import { CommonResponse } from '../../common/response/common-response';

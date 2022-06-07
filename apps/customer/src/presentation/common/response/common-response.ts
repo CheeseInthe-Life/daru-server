@@ -1,5 +1,6 @@
-import { NotNull, Nullable, Optional } from '../common-type';
-import { ErrorCode, ErrorCodeDescription } from './error-code';
+import { LocalDateTime } from '@js-joda/core';
+import { HttpStatus } from '@nestjs/common';
+import { Nullable, Optional } from '../common-type';
 
 export enum Result {
   SUCCESS = 'SUCCESS',
@@ -10,31 +11,40 @@ export class CommonResponse<T> {
   result: Result;
   data: Nullable<T>;
   message: Optional<string>;
-  errorCode: Optional<string>;
+  statusCode: Optional<HttpStatus>;
+  timestamp: string;
+  name: Optional<string>;
 
   private constructor({
     data,
-    errorCode,
+    statusCode,
     message,
     result,
   }: {
     result: Result;
     data: Nullable<T>;
     message: Nullable<string>;
-    errorCode: Nullable<string>;
+    statusCode: Nullable<HttpStatus>;
   }) {
     this.result = result;
     this.data = data;
-    this.errorCode = errorCode;
+    this.statusCode = statusCode;
     this.message = message;
+    this.timestamp = LocalDateTime.now().toString();
   }
 
-  static fail(errorCode: ErrorCodeDescription): CommonResponse<any> {
+  static fail({
+    message,
+    statusCode,
+  }: {
+    message: string;
+    statusCode: HttpStatus;
+  }): CommonResponse<any> {
     return new CommonResponse<any>({
       result: Result.FAIL,
-      message: errorCode.message,
+      message: message,
+      statusCode: statusCode,
       data: null,
-      errorCode: errorCode.name,
     });
   }
 
@@ -42,7 +52,7 @@ export class CommonResponse<T> {
     return new CommonResponse({
       data,
       result: Result.SUCCESS,
-      errorCode: null,
+      statusCode: null,
       message: null,
     });
   }
