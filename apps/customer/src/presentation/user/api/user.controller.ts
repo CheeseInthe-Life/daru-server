@@ -1,9 +1,9 @@
 import { UserMainInfo } from '@domain/domain-user/dto/user.info';
-import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
+import { Controller, Get, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { UserFacade } from 'apps/customer/src/application/user.facade';
 import { CommonResponse } from '../../common/response/common-response';
 
-@Controller('api/users')
+@Controller('api/v1/users')
 export class UserController {
   constructor(private readonly userFacade: UserFacade) {}
 

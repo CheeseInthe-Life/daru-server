@@ -1,19 +1,39 @@
-import { ProviderChannelEnum, User } from '../entity/user';
+import { GenderEnum, User } from '../entity/user';
 
 export class RegisterUserCommand {
-  userId: string;
   providerId: string;
-  providerName: ProviderChannelEnum;
-  email: string;
   nickname: string;
+  name: string;
+  gender: GenderEnum;
+  birthYear: string;
+
+  constructor({
+    providerId,
+    nickname,
+    name,
+    gender,
+    birthYear,
+  }: {
+    providerId: string;
+    nickname: string;
+    name: string;
+    gender: GenderEnum;
+    birthYear: string;
+  }) {
+    this.providerId = providerId;
+    this.nickname = nickname;
+    this.name = name;
+    this.gender = gender;
+    this.birthYear = birthYear;
+  }
 
   toUser(): User {
     return User.of({
-      userId: this.userId,
       providerId: this.providerId,
-      providerName: this.providerName,
-      email: this.email,
       nickname: this.nickname,
+      name: this.name,
+      gender: this.gender,
+      birthYear: this.birthYear,
     });
   }
 }

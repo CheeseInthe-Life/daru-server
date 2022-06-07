@@ -1,38 +1,40 @@
-export enum ProviderChannelEnum {
-  카카오 = 'KAKAO',
-  애플 = 'APPLE',
+import { ulid } from 'ulid';
+export enum GenderEnum {
+  남성 = 'MALE',
+  여성 = 'FEMALE',
 }
-
 export class User {
   userId: string;
   providerId: string;
-  providerName: ProviderChannelEnum;
-  email: string;
+  name: string;
   nickname: string;
+  gender: GenderEnum | null;
+  birthYear: string;
 
   private constructor() {
     return;
   }
 
   static of({
-    userId,
     nickname,
-    email,
     providerId,
-    providerName,
+    gender,
+    name,
+    birthYear,
   }: {
-    userId: string;
     nickname: string;
-    email: string;
     providerId: string;
-    providerName: ProviderChannelEnum;
+    name: string;
+    birthYear: string;
+    gender?: GenderEnum;
   }): User {
     const user = new User();
-    user.userId = userId;
+    user.userId = ulid();
     user.nickname = nickname;
-    user.email = email;
     user.providerId = providerId;
-    user.providerName = providerName;
+    user.gender = gender;
+    user.birthYear = birthYear;
+    user.name = name;
     return user;
   }
 }
