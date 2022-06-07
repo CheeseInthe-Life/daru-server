@@ -1,4 +1,4 @@
-import { User } from '../entity/user';
+import { GenderEnum, User } from '../entity/user';
 
 export interface TokenPair {
   accessToken: string;
@@ -8,14 +8,25 @@ export interface TokenPair {
 export class UserMainInfo {
   userId: string;
   providerId: string;
-  email: string;
   nickname: string;
+  name: string;
+  gender: GenderEnum | null;
+  birthYear: string;
 
-  private constructor({ userId, providerId, email, nickname }: User) {
+  private constructor({
+    userId,
+    providerId,
+    nickname,
+    name,
+    gender,
+    birthYear,
+  }: User) {
     this.userId = userId;
     this.providerId = providerId;
-    this.email = email;
     this.nickname = nickname;
+    this.name = name;
+    this.gender = gender;
+    this.birthYear = birthYear;
   }
 
   static of(user: User) {

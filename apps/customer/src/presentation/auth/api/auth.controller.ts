@@ -1,4 +1,5 @@
 import {
+  Body,
   Controller,
   Get,
   HttpCode,
@@ -11,9 +12,15 @@ import { AuthGuard } from '@nestjs/passport';
 import { AuthFacade } from 'apps/customer/src/application/auth.facade';
 import { Request } from 'express';
 import { CommonResponse } from '../../common/response/common-response';
-import { AccountSignInDto } from './auth.dto';
 
-@Controller('api/auth')
+import {
+  AccountSignInDto,
+  SignUpDto,
+  TokenPairDto,
+  UserNicknameValidationDto,
+} from './auth.dto';
+
+@Controller('api/v1/auth')
 export class AuthController {
   constructor(private readonly authFacade: AuthFacade) {}
 
@@ -37,7 +44,19 @@ export class AuthController {
     );
   }
 
+  @Post('users/nickname/verification')
+  @HttpCode(HttpStatus.OK)
+  public async validateNickname(
+    @Body() dto: UserNicknameValidationDto,
+  ): Promise<CommonResponse<boolean>> {
+    return CommonResponse.success(await this.authFacade.validateNickname(dto));
+  }
+
   @Post('sign-up')
   @HttpCode(HttpStatus.OK)
-  private signUp() {}
+  public async signUpUser(
+    @Body() dto: SignUpDto,
+  ): Promise<CommonResponse<TokenPairDto>> {
+    return CommonResponse.success(await this.authFacade.signUp(dto));
+  }
 }
