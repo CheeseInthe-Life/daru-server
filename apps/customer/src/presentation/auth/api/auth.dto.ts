@@ -6,6 +6,7 @@ import {
   AccountStatusEnum,
   ProviderChannelEnum,
 } from '@infra/persistence/entity/account.entity';
+import { ApiProperty } from '@nestjs/swagger';
 import {
   IsEnum,
   IsJWT,
@@ -16,14 +17,19 @@ import {
 import { Optional } from '../../common/common-type';
 
 export class SignUpDto {
+  @ApiProperty()
   @IsNumber()
   accountId: number;
+  @ApiProperty()
   @IsString()
   name: string;
+  @ApiProperty()
   @IsString()
   nickname: string;
+  @ApiProperty({ enum: GenderEnum })
   @IsEnum(GenderEnum)
   gender: Optional<GenderEnum>;
+  @ApiProperty()
   @IsNumberString({ length: 4 })
   birthYear: string;
 }
@@ -85,13 +91,16 @@ export class AccountMainDto {
 }
 
 export class UserNicknameValidationDto {
+  @ApiProperty()
   @IsString()
   nickname: string;
 }
 
 export class TokenPairDto {
+  @ApiProperty()
   @IsJWT()
   accessToken: string;
+  @ApiProperty()
   @IsJWT()
   refreshToken: string;
 }

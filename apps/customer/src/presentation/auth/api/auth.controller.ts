@@ -9,9 +9,16 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import { ApiResponse } from '@nestjs/swagger';
+import {
+  ApiExcludeEndpoint,
+  ApiExtraModels,
+  ApiOkResponse,
+  ApiTags,
+  getSchemaPath,
+} from '@nestjs/swagger';
 import { AuthFacade } from 'apps/customer/src/application/auth.facade';
 import { Request } from 'express';
+import { ApiCommonResponse } from '../../documentation/api-common-response.decorator';
 import { CommonResponse } from '../../common/response/common-response';
 
 import {
@@ -21,13 +28,16 @@ import {
   UserNicknameValidationDto,
 } from './auth.dto';
 
+@ApiTags('auth')
 @Controller('api/v1/auth')
+@ApiExtraModels(CommonResponse)
 export class AuthController {
   constructor(private readonly authFacade: AuthFacade) {}
 
   @Get('kakao')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('kakao'))
+  @ApiExcludeEndpoint()
   async signInKakao(): Promise<CommonResponse<null>> {
     return CommonResponse.success(null);
   }
@@ -35,6 +45,7 @@ export class AuthController {
   @Get('kakao/callback')
   @HttpCode(HttpStatus.OK)
   @UseGuards(AuthGuard('kakao'))
+  @ApiExcludeEndpoint()
   async callBackFunction(
     @Req() request: Request,
   ): Promise<CommonResponse<AccountSignInDto>> {
@@ -47,6 +58,7 @@ export class AuthController {
 
   @Post('users/nickname/verification')
   @HttpCode(HttpStatus.OK)
+  @ApiCommonResponse('boolean')
   public async validateNickname(
     @Body() dto: UserNicknameValidationDto,
   ): Promise<CommonResponse<boolean>> {
@@ -55,6 +67,7 @@ export class AuthController {
 
   @Post('sign-up')
   @HttpCode(HttpStatus.OK)
+  @ApiCommonResponse(TokenPairDto)
   public async signUpUser(
     @Body() dto: SignUpDto,
   ): Promise<CommonResponse<TokenPairDto>> {

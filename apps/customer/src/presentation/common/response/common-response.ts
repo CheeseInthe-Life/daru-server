@@ -1,5 +1,6 @@
 import { LocalDateTime } from '@js-joda/core';
 import { HttpStatus } from '@nestjs/common';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { Nullable, Optional } from '../common-type';
 
 export enum Result {
@@ -8,12 +9,18 @@ export enum Result {
 }
 
 export class CommonResponse<T> {
+  @ApiProperty()
   result: Result;
+  @ApiProperty()
   data: Nullable<T>;
+  @ApiPropertyOptional({ type: String })
   message: Optional<string>;
+  @ApiProperty({ type: Number, example: 200 })
   statusCode: Optional<HttpStatus>;
-  timestamp: string;
+  @ApiPropertyOptional({ type: String })
   name: Optional<string>;
+  @ApiProperty()
+  timestamp: string;
 
   private constructor({
     data,
