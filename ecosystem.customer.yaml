@@ -1,5 +1,5 @@
 apps:
-  - script: ./dist/apps/customer/main.js
+  - script: ./dist/apps/customer/apps/customer/src/main.js
     name: 'DARU_CUSTOMER_API_SERVER'
     watch: true
     wait_ready: true

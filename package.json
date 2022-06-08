@@ -9,7 +9,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "build:customer": "nest build customer",
-    "postbuild:customer": "pm2 update ecosystem.customer.yaml && pm2 save && pm2 log",
+    "postbuild:customer": "pm2 reload --update-env ecosystem.customer.yaml",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "start:customer": "nest start customer --watch",
