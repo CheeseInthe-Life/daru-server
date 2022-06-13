@@ -1,6 +1,6 @@
 import { RegisterUserCommand } from '@domain/domain-user/dto/user.command';
 import { TokenPair } from '@domain/domain-user/dto/user.info';
-import { GenderEnum } from '@domain/domain-user/entity/user';
+import { UserGenderEnum } from '@domain/domain-user/entity/user';
 import {
   AccountEntity,
   AccountStatusEnum,
@@ -26,9 +26,9 @@ export class SignUpDto {
   @ApiProperty()
   @IsString()
   nickname: string;
-  @ApiProperty({ enum: GenderEnum })
-  @IsEnum(GenderEnum)
-  gender: Optional<GenderEnum>;
+  @ApiProperty({ enum: UserGenderEnum })
+  @IsEnum(UserGenderEnum)
+  gender: Optional<UserGenderEnum>;
   @ApiProperty()
   @IsNumberString({ length: 4 })
   birthYear: string;

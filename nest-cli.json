@@ -71,6 +71,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/persistence/tsconfig.lib.json"
       }
+    },
+    "domain-manager": {
+      "type": "library",
+      "root": "libs/domain-manager",
+      "entryFile": "index",
+      "sourceRoot": "libs/domain-manager/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/domain-manager/tsconfig.lib.json"
+      }
     }
   }
 }

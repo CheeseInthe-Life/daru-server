@@ -1,10 +1,10 @@
-import { GenderEnum, User } from '../entity/user';
+import { UserGenderEnum, User } from '../entity/user';
 
 export class RegisterUserCommand {
   providerId: string;
   nickname: string;
   name: string;
-  gender: GenderEnum;
+  gender: UserGenderEnum;
   birthYear: string;
 
   constructor({
@@ -17,7 +17,7 @@ export class RegisterUserCommand {
     providerId: string;
     nickname: string;
     name: string;
-    gender: GenderEnum;
+    gender: UserGenderEnum;
     birthYear: string;
   }) {
     this.providerId = providerId;

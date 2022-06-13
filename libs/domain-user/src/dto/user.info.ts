@@ -1,4 +1,4 @@
-import { GenderEnum, User } from '../entity/user';
+import { UserGenderEnum, User } from '../entity/user';
 
 export interface TokenPair {
   accessToken: string;
@@ -10,7 +10,7 @@ export class UserMainInfo {
   providerId: string;
   nickname: string;
   name: string;
-  gender: GenderEnum | null;
+  gender: UserGenderEnum | null;
   birthYear: string;
 
   private constructor({

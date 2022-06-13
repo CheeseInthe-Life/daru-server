@@ -1,6 +1,5 @@
 @URL = http://localhost:8888
 
-
 ###
 GET {{URL}}/api/v1/users
 Content-Type: application/json;

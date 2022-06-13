@@ -62,10 +62,10 @@ export class AccountEntity {
   refreshToken: string | null;
 
   @CreateDateColumn()
-  createdAt: Date;
+  readonly createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  readonly updatedAt: Date;
 
   private constructor() {
     return;

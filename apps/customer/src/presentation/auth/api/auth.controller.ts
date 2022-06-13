@@ -9,13 +9,7 @@ import {
   UseGuards,
 } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
-import {
-  ApiExcludeEndpoint,
-  ApiExtraModels,
-  ApiOkResponse,
-  ApiTags,
-  getSchemaPath,
-} from '@nestjs/swagger';
+import { ApiExcludeEndpoint, ApiExtraModels, ApiTags } from '@nestjs/swagger';
 import { AuthFacade } from 'apps/customer/src/application/auth.facade';
 import { Request } from 'express';
 import { ApiCommonResponse } from '../../documentation/api-common-response.decorator';

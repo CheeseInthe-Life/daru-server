@@ -1,5 +1,5 @@
 import { ulid } from 'ulid';
-export enum GenderEnum {
+export enum UserGenderEnum {
   남성 = 'MALE',
   여성 = 'FEMALE',
 }
@@ -8,7 +8,7 @@ export class User {
   providerId: string;
   name: string;
   nickname: string;
-  gender: GenderEnum | null;
+  gender: UserGenderEnum | null;
   birthYear: string;
 
   private constructor() {
@@ -16,20 +16,22 @@ export class User {
   }
 
   static of({
+    userId = ulid(),
     nickname,
     providerId,
     gender,
     name,
     birthYear,
   }: {
+    userId?: string;
     nickname: string;
     providerId: string;
     name: string;
     birthYear: string;
-    gender?: GenderEnum;
+    gender?: UserGenderEnum;
   }): User {
     const user = new User();
-    user.userId = ulid();
+    user.userId = userId;
     user.nickname = nickname;
     user.providerId = providerId;
     user.gender = gender;

@@ -9,7 +9,7 @@
     "prebuild": "rimraf dist",
     "build": "nest build",
     "build:customer": "nest build customer",
-    "postbuild:customer": "pm2 reload --update-env ecosystem.customer.yaml",
+    "postbuild:customer": "pm2 reload --update-env apps/customer/ecosystem.yaml",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "start:customer": "nest start customer --watch",
@@ -101,7 +101,8 @@
       "^@infra/aws(|/.*)$": "<rootDir>/libs/aws/src/$1",
       "^@infra/auth-strategy(|/.*)$": "<rootDir>/libs/auth-strategy/src/$1",
       "^@domain/domain-user(|/.*)$": "<rootDir>/libs/domain-user/src/$1",
-      "^@persistence/persistence(|/.*)$": "<rootDir>/libs/persistence/src/$1"
+      "^@persistence/persistence(|/.*)$": "<rootDir>/libs/persistence/src/$1",
+      "^@domain/domain-manager(|/.*)$": "<rootDir>/libs/domain-manager/src/$1"
     }
   }
 }

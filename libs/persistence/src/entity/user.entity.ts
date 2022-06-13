@@ -1,4 +1,4 @@
-import { GenderEnum } from '@domain/domain-user/entity/user';
+import { UserGenderEnum } from '@domain/domain-user/entity/user';
 import { LocalDateTime } from '@js-joda/core';
 import {
   Column,
@@ -38,7 +38,7 @@ export class UserEntity {
     nullable: true,
     length: 8,
   })
-  gender: GenderEnum | null;
+  gender: UserGenderEnum | null;
 
   @Column({
     length: 4,
@@ -46,23 +46,11 @@ export class UserEntity {
   birthYear: string;
 
   @CreateDateColumn()
-  createdAt: Date;
+  readonly createdAt: Date;
 
   @UpdateDateColumn()
-  updatedAt: Date;
+  readonly updatedAt: Date;
 
   @DeleteDateColumn()
-  deletedAt: Date | null;
-
-  getCreatedAt(): LocalDateTime {
-    return DateTimeUtil.toLocalDateTime(this.createdAt);
-  }
-
-  getUpdatedAt(): LocalDateTime {
-    return DateTimeUtil.toLocalDateTime(this.updatedAt);
-  }
-
-  getDeletedAt(): LocalDateTime | null {
-    return DateTimeUtil.toLocalDateTime(this.deletedAt);
-  }
+  readonly deletedAt: Date | null;
 }
