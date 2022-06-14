@@ -1,17 +1,7 @@
 import 'dotenv/config';
-import { Inject, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { Strategy } from 'passport-kakao';
 import { PassportStrategy } from '@nestjs/passport';
-import { UserRepository } from '@domain/domain-user/repository/user.repository';
-import { UserDIToken } from '@domain/domain-user/di/domain-user.token';
-import { EntityNotFoundError } from 'typeorm';
-import {
-  AccountEntity,
-  ProviderChannelEnum,
-} from '@infra/persistence/entity/account.entity';
-import { AccountRepositoryImpl } from '@infra/persistence/repository/account.repository';
-import { User } from '@domain/domain-user/entity/user';
-import { DateTimeUtil } from '@infra/persistence/util/date-time-util';
 
 const { KAKAO_CLIENT_KEY, KAKAO_CLIENT_SECRET_KEY, KAKAO_REDIRECT_URL } =
   process.env;
@@ -30,12 +20,7 @@ export interface KakaoProfile {
 
 @Injectable()
 export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
-  constructor(
-    @Inject(UserDIToken.AccountRepository)
-    private readonly accountRepository: AccountRepositoryImpl,
-    @Inject(UserDIToken.UserRepository)
-    private readonly userRepository: UserRepository,
-  ) {
+  constructor() {
     super({
       clientID: KAKAO_CLIENT_KEY as string,
       clientSecret: KAKAO_CLIENT_SECRET_KEY as string,
@@ -49,52 +34,9 @@ export class KakaoStrategy extends PassportStrategy(Strategy, 'kakao') {
     kakaoProfile: KakaoProfile,
     done: (error: any, user?: any, info?: any) => void,
   ) {
-    const providerId = String(kakaoProfile.id);
-    const providerName = ProviderChannelEnum.카카오;
-    const username = kakaoProfile.username;
-
-    const account = await this.accountRepository
-      .findAccountByProviderIdAndProviderName({
-        providerId,
-        providerName,
-      })
-      .catch(async (error: EntityNotFoundError) => {
-        if (error instanceof EntityNotFoundError) {
-          return await this.accountRepository.store(
-            AccountEntity.of({
-              providerId,
-              providerName,
-              connectedAt: DateTimeUtil.toLocalDateTime(
-                kakaoProfile._json.connected_at,
-              ),
-              username,
-            }),
-          );
-        } else {
-          throw error;
-        }
-      });
-
-    let user: User | undefined = undefined;
-    if (account) {
-      user = await this.userRepository
-        .findUserByProviderId({
-          providerId,
-        })
-        .catch((error: EntityNotFoundError) => {
-          if (error instanceof EntityNotFoundError) {
-            return undefined;
-          } else {
-            throw error;
-          }
-        });
-    }
-
     return done(null, {
-      providerId,
-      providerName,
-      account,
-      user,
+      accessToken,
+      refreshToken,
     });
   }
 }

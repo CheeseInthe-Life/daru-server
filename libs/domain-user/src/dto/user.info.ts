@@ -7,22 +7,13 @@ export interface TokenPair {
 
 export class UserMainInfo {
   userId: string;
-  providerId: string;
   nickname: string;
   name: string;
   gender: UserGenderEnum | null;
   birthYear: string;
 
-  private constructor({
-    userId,
-    providerId,
-    nickname,
-    name,
-    gender,
-    birthYear,
-  }: User) {
+  private constructor({ userId, nickname, name, gender, birthYear }: User) {
     this.userId = userId;
-    this.providerId = providerId;
     this.nickname = nickname;
     this.name = name;
     this.gender = gender;

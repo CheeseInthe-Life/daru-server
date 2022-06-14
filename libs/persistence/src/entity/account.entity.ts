@@ -14,12 +14,6 @@ export enum ProviderChannelEnum {
   애플 = 'APPLE',
 }
 
-export enum AccountStatusEnum {
-  계정연결 = 'CONNECTION',
-  가입완료 = 'COMPLETE_SIGNUP',
-  계정탈퇴 = 'WITHDRAWAL',
-}
-
 @Entity({
   name: 'account',
 })
@@ -44,19 +38,13 @@ export class AccountEntity {
   username: string;
 
   @Column({
-    length: 16,
-  })
-  status: AccountStatusEnum;
-
-  @Column({
     type: 'timestamp',
     transformer: new LocalDateTimeTransformer(),
-    nullable: true,
   })
-  connectedAt: LocalDateTime | null;
+  connectedAt: LocalDateTime;
 
-  @Column({ length: 32, nullable: true })
-  userId: string | null;
+  @Column({ length: 32 })
+  userId: string;
 
   @Column({ length: 256, nullable: true })
   refreshToken: string | null;
@@ -76,33 +64,28 @@ export class AccountEntity {
     providerName,
     connectedAt,
     username,
+    userId,
+    refreshToken,
   }: {
     providerId: string;
     providerName: ProviderChannelEnum;
     connectedAt: LocalDateTime;
     username: string;
+    userId: string;
+    refreshToken?: string;
   }): AccountEntity {
     const account = new AccountEntity();
     account.providerId = providerId;
     account.providerName = providerName;
-    account.status = AccountStatusEnum.계정연결;
     account.connectedAt = connectedAt;
     account.username = username;
-
+    account.userId = userId;
+    account.refreshToken = refreshToken;
     return account;
   }
 
-  modify({ userId, refreshToken }: { userId?: string; refreshToken?: string }) {
-    if (userId) this.userId = userId;
+  modify({ refreshToken }: { refreshToken?: string }) {
     if (refreshToken) this.refreshToken = refreshToken;
-  }
-
-  withdrawalAccount() {
-    this.status = AccountStatusEnum.계정탈퇴;
-  }
-
-  completeSignUp() {
-    this.status = AccountStatusEnum.가입완료;
   }
 
   getCreatedAt(): LocalDateTime {

@@ -23,12 +23,21 @@ export class HttpExceptionFilter implements ExceptionFilter {
         name: ${name},
         message: ${message},
         status: ${status},
+        stackTrace: ${stack}
     `);
-    console.error(stack);
+
+    const errorMessage: null | string | object = (
+      exception.getResponse() as any
+    ).message;
 
     response.status(status).json(
       CommonResponse.fail({
-        message: message,
+        message:
+          typeof errorMessage === 'string'
+            ? errorMessage
+            : typeof errorMessage === 'object'
+            ? errorMessage.toString()
+            : message,
         statusCode: status,
       }),
     );

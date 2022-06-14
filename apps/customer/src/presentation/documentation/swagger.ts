@@ -1,5 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { CommonResponse } from '../common/response/common-response';
 
 export const swaggerLoader = (application: INestApplication) => {
   const config = new DocumentBuilder()
@@ -8,6 +9,8 @@ export const swaggerLoader = (application: INestApplication) => {
     .setVersion('1.0.0')
     .build();
 
-  const document = SwaggerModule.createDocument(application, config);
+  const document = SwaggerModule.createDocument(application, config, {
+    extraModels: [CommonResponse],
+  });
   SwaggerModule.setup('api', application, document);
 };

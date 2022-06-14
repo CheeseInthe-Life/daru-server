@@ -1,28 +1,26 @@
-import { RegisterUserCommand } from '@domain/domain-user/dto/user.command';
 import { TokenPair } from '@domain/domain-user/dto/user.info';
 import { UserGenderEnum } from '@domain/domain-user/entity/user';
 import {
   AccountEntity,
-  AccountStatusEnum,
   ProviderChannelEnum,
 } from '@infra/persistence/entity/account.entity';
 import { ApiProperty } from '@nestjs/swagger';
 import {
+  IsBoolean,
   IsEnum,
-  IsJWT,
   IsNumber,
   IsNumberString,
   IsString,
 } from 'class-validator';
 import { Optional } from '../../common/common-type';
 
-export class SignUpDto {
+export class SignUpRequestDto {
   @ApiProperty()
-  @IsNumber()
-  accountId: number;
+  @IsEnum(ProviderChannelEnum)
+  providerName: ProviderChannelEnum;
   @ApiProperty()
   @IsString()
-  name: string;
+  providerAccessToken: string;
   @ApiProperty()
   @IsString()
   nickname: string;
@@ -34,33 +32,13 @@ export class SignUpDto {
   birthYear: string;
 }
 
-export class AccountSignInDto {
-  account: AccountMainDto;
-  tokenPair: Optional<TokenPair>;
-
-  private constructor({
-    account,
-    tokenPair,
-  }: {
-    account: AccountEntity;
-    tokenPair: Optional<TokenPair>;
-  }) {
-    this.account = AccountMainDto.of(account);
-    this.tokenPair = tokenPair;
-  }
-
-  static of({
-    account,
-    tokenPair,
-  }: {
-    account: AccountEntity;
-    tokenPair: Optional<TokenPair>;
-  }) {
-    return new AccountSignInDto({
-      account,
-      tokenPair,
-    });
-  }
+export class SignInRequestDto {
+  @ApiProperty()
+  @IsEnum(ProviderChannelEnum)
+  readonly providerName: ProviderChannelEnum;
+  @ApiProperty()
+  @IsString()
+  readonly providerAccessToken: string;
 }
 
 export class AccountMainDto {
@@ -70,8 +48,6 @@ export class AccountMainDto {
   providerId: string;
   @IsEnum(ProviderChannelEnum)
   providerName: ProviderChannelEnum;
-  @IsEnum(AccountStatusEnum)
-  status: AccountStatusEnum;
   @IsString()
   connectedAt: string;
 
@@ -84,23 +60,27 @@ export class AccountMainDto {
     accountMainDto.accountId = account.accountId;
     accountMainDto.providerId = account.providerId;
     accountMainDto.providerName = account.providerName;
-    accountMainDto.status = account.status;
     accountMainDto.connectedAt = account.connectedAt.toString();
     return accountMainDto;
   }
 }
 
-export class UserNicknameValidationDto {
+export class UserNicknameValidationRequestDto {
   @ApiProperty()
   @IsString()
-  nickname: string;
+  readonly nickname: string;
 }
 
+export class UserNicknameValidationResponseDto {
+  @ApiProperty()
+  @IsBoolean()
+  isValid: boolean;
+}
 export class TokenPairDto {
   @ApiProperty()
-  @IsJWT()
-  accessToken: string;
+  @IsString()
+  readonly accessToken: string;
   @ApiProperty()
-  @IsJWT()
-  refreshToken: string;
+  @IsString()
+  readonly refreshToken: string;
 }

@@ -1,26 +1,27 @@
-import { Inject, Injectable, Logger } from '@nestjs/common';
+import { Inject, Injectable } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
-import { TokenPair, UserMainInfo } from '@domain/domain-user/dto/user.info';
 import { Request } from 'express';
-import { User } from '@domain/domain-user/entity/user';
-import { Optional } from '../presentation/common/common-type';
 import {
   AccountEntity,
-  AccountStatusEnum,
   ProviderChannelEnum,
 } from '@infra/persistence/entity/account.entity';
 import { UserService } from '@domain/domain-user';
 import {
-  SignUpDto,
-  UserNicknameValidationDto,
+  SignInRequestDto,
+  SignUpRequestDto,
+  TokenPairDto,
+  UserNicknameValidationRequestDto,
+  UserNicknameValidationResponseDto,
 } from '../presentation/auth/api/auth.dto';
 import { UserDIToken } from '@domain/domain-user/di/domain-user.token';
 import { EntityNotFoundError } from 'typeorm';
 import { AccountRepositoryImpl } from '@infra/persistence/repository/account.repository';
-import { AccountNotFoundException } from '../presentation/common/exception/account-not-found.exception';
-import { UserAlreadyRegisterException } from '../presentation/common/exception/user-already-register-exception';
+import { KakaoService } from '@infra/kakao';
+import { DateTimeUtil } from '@infra/persistence/util/date-time-util';
 import { RegisterUserCommand } from '@domain/domain-user/dto/user.command';
+import { ProviderNotSupportedException } from '../presentation/common/exception/provider-not-supported.exception';
+import { UserAlreadyRegisterException } from '../presentation/common/exception/user-already-register-exception';
 
 export interface JwtPayload {
   userId: string;
@@ -30,15 +31,16 @@ export class AuthFacade {
   constructor(
     private readonly configService: ConfigService,
     private readonly jwtService: JwtService,
-
     @Inject(UserDIToken.AccountRepository)
     private readonly accountRepository: AccountRepositoryImpl,
-
     @Inject(UserDIToken.UserService)
     private readonly userService: UserService,
+    private readonly kakaoService: KakaoService,
   ) {}
 
-  async validateNickname(dto: UserNicknameValidationDto): Promise<boolean> {
+  async validateNickname(
+    dto: UserNicknameValidationRequestDto,
+  ): Promise<UserNicknameValidationResponseDto> {
     const user = await this.userService
       .retrieveUserByNickname({
         nickname: dto.nickname,
@@ -50,60 +52,95 @@ export class AuthFacade {
           throw error;
         }
       });
-    const isValid = user ? false : true;
 
-    return isValid;
+    return user ? { isValid: false } : { isValid: true };
   }
 
-  async signUp(dto: SignUpDto): Promise<TokenPair> {
-    const account = await this.accountRepository
-      .findAccountByAccountId({
-        accountId: dto.accountId,
-      })
-      .catch((error: Error) => {
-        if (error instanceof EntityNotFoundError) {
-          throw new AccountNotFoundException();
-        } else {
-          throw error;
-        }
+  async signUp(dto: SignUpRequestDto): Promise<TokenPairDto> {
+    const { birthYear, gender, nickname, providerName, providerAccessToken } =
+      dto;
+
+    if (providerName === ProviderChannelEnum.카카오) {
+      const { id, connected_at, properties } =
+        await this.kakaoService.getAccount({
+          accessToken: providerAccessToken,
+        });
+
+      const isRegister = await this.accountRepository
+        .findAccountByProviderIdAndProviderName({
+          providerId: String(id),
+          providerName,
+        })
+        .catch((exception: EntityNotFoundError) => {
+          return null;
+        });
+
+      if (isRegister) {
+        throw new UserAlreadyRegisterException();
+      }
+
+      const user = await this.userService.registerUser(
+        new RegisterUserCommand({
+          name: properties.nickname,
+          gender: gender,
+          birthYear: birthYear,
+          nickname: nickname,
+        }),
+      );
+      const tokenPair = this.createTokenPair({ userId: user.userId });
+
+      const account = AccountEntity.of({
+        providerId: String(id),
+        providerName,
+        connectedAt: DateTimeUtil.toLocalDateTime(connected_at),
+        username: properties.nickname,
+        userId: user.userId,
+        refreshToken: tokenPair.refreshToken,
       });
 
-    if (account.status !== AccountStatusEnum.계정연결)
-      throw new UserAlreadyRegisterException();
+      await this.accountRepository.store(account);
 
-    const user = await this.userService.registerUser(
-      new RegisterUserCommand({ ...dto, providerId: account.providerId }),
-    );
-
-    account.completeSignUp();
-    await this.accountRepository.store(account);
-
-    return this.createTokenPair({ userId: user.userId });
-  }
-
-  async oauthCallbackProcessing(request: Request): Promise<{
-    account: Optional<AccountEntity>;
-    tokenPair: Optional<TokenPair>;
-  }> {
-    const user = request.user as {
-      providerId: string;
-      providerName: ProviderChannelEnum;
-      account: Optional<AccountEntity>;
-      user: Optional<User>;
-    };
-
-    let tokenPair: Optional<TokenPair> = undefined;
-    if (user.user) {
-      tokenPair = this.createTokenPair({ userId: user.user.userId });
+      return tokenPair;
+    } else if (providerName === ProviderChannelEnum.애플) {
+      throw new ProviderNotSupportedException();
+    } else {
+      throw new ProviderNotSupportedException();
     }
+  }
 
-    return {
-      account: user.account,
-      tokenPair,
+  async signIn(dto: SignInRequestDto): Promise<TokenPairDto> {
+    const { providerAccessToken, providerName } = dto;
+    if (providerName === ProviderChannelEnum.카카오) {
+      const { id } = await this.kakaoService.getAccount({
+        accessToken: providerAccessToken,
+      });
+
+      const account: AccountEntity | undefined = await this.accountRepository
+        .findAccountByProviderIdAndProviderName({
+          providerId: String(id),
+          providerName: providerName,
+        })
+        .catch((exception: EntityNotFoundError) => undefined);
+
+      if (!account) return { accessToken: null, refreshToken: null };
+
+      const tokenPair = this.createTokenPair({ userId: account.userId });
+
+      account.modify({ refreshToken: tokenPair.refreshToken });
+      await this.accountRepository.store(account);
+
+      return tokenPair;
+    }
+  }
+
+  async oauthCallbackProcessing(request: Request): Promise<TokenPairDto> {
+    return request.user as {
+      accessToken: string;
+      refreshToken: string;
     };
   }
 
-  private createTokenPair({ userId }: JwtPayload): TokenPair {
+  private createTokenPair({ userId }: JwtPayload): TokenPairDto {
     const payload = { userId };
     return {
       accessToken: this.jwtService.sign(payload, {

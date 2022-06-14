@@ -15,8 +15,8 @@ describe('AdminController', () => {
   });
 
   describe('root', () => {
-    it('should return "Hello World!"', () => {
-      expect(adminController.getHello()).toBe('Hello World!');
+    it('should return "success"', () => {
+      expect(adminController.getHello()).toBe('success');
     });
   });
 });

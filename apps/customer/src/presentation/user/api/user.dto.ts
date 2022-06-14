@@ -7,9 +7,6 @@ export class UserMainDto {
   userId: string;
 
   @IsString()
-  providerId: string;
-
-  @IsString()
   nickname: string;
 
   @IsString()
@@ -21,16 +18,8 @@ export class UserMainDto {
   @IsNumberString({ length: 4 })
   birthYear: string;
 
-  constructor({
-    nickname,
-    providerId,
-    userId,
-    name,
-    gender,
-    birthYear,
-  }: UserMainInfo) {
+  constructor({ nickname, userId, name, gender, birthYear }: UserMainInfo) {
     this.nickname = nickname;
-    this.providerId = providerId;
     this.userId = userId;
     this.name = name;
     this.gender = gender;

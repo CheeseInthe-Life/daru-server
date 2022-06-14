@@ -4,6 +4,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Logger,
   Post,
   Req,
   UseGuards,
@@ -16,15 +17,15 @@ import { ApiCommonResponse } from '../../documentation/api-common-response.decor
 import { CommonResponse } from '../../common/response/common-response';
 
 import {
-  AccountSignInDto,
-  SignUpDto,
+  SignInRequestDto,
+  SignUpRequestDto,
   TokenPairDto,
-  UserNicknameValidationDto,
+  UserNicknameValidationRequestDto,
+  UserNicknameValidationResponseDto,
 } from './auth.dto';
 
 @ApiTags('auth')
 @Controller('api/v1/auth')
-@ApiExtraModels(CommonResponse)
 export class AuthController {
   constructor(private readonly authFacade: AuthFacade) {}
 
@@ -42,28 +43,35 @@ export class AuthController {
   @ApiExcludeEndpoint()
   async callBackFunction(
     @Req() request: Request,
-  ): Promise<CommonResponse<AccountSignInDto>> {
+  ): Promise<CommonResponse<TokenPairDto>> {
     return CommonResponse.success(
-      AccountSignInDto.of(
-        await this.authFacade.oauthCallbackProcessing(request),
-      ),
+      await this.authFacade.oauthCallbackProcessing(request),
     );
   }
 
   @Post('users/nickname/verification')
   @HttpCode(HttpStatus.OK)
-  @ApiCommonResponse('boolean')
+  @ApiCommonResponse(UserNicknameValidationResponseDto)
   public async validateNickname(
-    @Body() dto: UserNicknameValidationDto,
-  ): Promise<CommonResponse<boolean>> {
+    @Body() dto: UserNicknameValidationRequestDto,
+  ): Promise<CommonResponse<UserNicknameValidationResponseDto>> {
     return CommonResponse.success(await this.authFacade.validateNickname(dto));
+  }
+
+  @Post('sign-in')
+  @HttpCode(HttpStatus.OK)
+  @ApiCommonResponse(TokenPairDto)
+  public async signInUser(
+    @Body() dto: SignInRequestDto,
+  ): Promise<CommonResponse<TokenPairDto>> {
+    return CommonResponse.success(await this.authFacade.signIn(dto));
   }
 
   @Post('sign-up')
   @HttpCode(HttpStatus.OK)
   @ApiCommonResponse(TokenPairDto)
   public async signUpUser(
-    @Body() dto: SignUpDto,
+    @Body() dto: SignUpRequestDto,
   ): Promise<CommonResponse<TokenPairDto>> {
     return CommonResponse.success(await this.authFacade.signUp(dto));
   }

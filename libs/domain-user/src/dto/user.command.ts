@@ -1,3 +1,4 @@
+import { ulid } from 'ulid';
 import { UserGenderEnum, User } from '../entity/user';
 
 export class RegisterUserCommand {
@@ -8,19 +9,16 @@ export class RegisterUserCommand {
   birthYear: string;
 
   constructor({
-    providerId,
     nickname,
     name,
     gender,
     birthYear,
   }: {
-    providerId: string;
     nickname: string;
     name: string;
     gender: UserGenderEnum;
     birthYear: string;
   }) {
-    this.providerId = providerId;
     this.nickname = nickname;
     this.name = name;
     this.gender = gender;
@@ -29,7 +27,7 @@ export class RegisterUserCommand {
 
   toUser(): User {
     return User.of({
-      providerId: this.providerId,
+      userId: ulid(),
       nickname: this.nickname,
       name: this.name,
       gender: this.gender,

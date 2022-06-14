@@ -1,5 +1,4 @@
 import { UserGenderEnum } from '@domain/domain-user/entity/user';
-import { LocalDateTime } from '@js-joda/core';
 import {
   Column,
   CreateDateColumn,
@@ -9,7 +8,6 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
-import { DateTimeUtil } from '../util/date-time-util';
 
 @Entity({
   name: 'user',
@@ -18,11 +16,6 @@ import { DateTimeUtil } from '../util/date-time-util';
 export class UserEntity {
   @PrimaryColumn({ length: 32 })
   userId: string;
-
-  @Column({
-    length: 128,
-  })
-  providerId: string;
 
   @Column({
     length: 16,

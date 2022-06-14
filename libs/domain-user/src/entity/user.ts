@@ -5,7 +5,6 @@ export enum UserGenderEnum {
 }
 export class User {
   userId: string;
-  providerId: string;
   name: string;
   nickname: string;
   gender: UserGenderEnum | null;
@@ -18,14 +17,12 @@ export class User {
   static of({
     userId = ulid(),
     nickname,
-    providerId,
     gender,
     name,
     birthYear,
   }: {
     userId?: string;
     nickname: string;
-    providerId: string;
     name: string;
     birthYear: string;
     gender?: UserGenderEnum;
@@ -33,7 +30,6 @@ export class User {
     const user = new User();
     user.userId = userId;
     user.nickname = nickname;
-    user.providerId = providerId;
     user.gender = gender;
     user.birthYear = birthYear;
     user.name = name;

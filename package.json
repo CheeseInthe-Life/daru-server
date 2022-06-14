@@ -38,6 +38,7 @@
     "@nestjs/platform-express": "^8.0.0",
     "@nestjs/swagger": "^5.2.1",
     "@nestjs/typeorm": "^8.0.4",
+    "axios": "^0.27.2",
     "class-transformer": "^0.5.1",
     "class-validator": "^0.13.2",
     "mysql2": "^2.3.3",
@@ -102,7 +103,8 @@
       "^@infra/auth-strategy(|/.*)$": "<rootDir>/libs/auth-strategy/src/$1",
       "^@domain/domain-user(|/.*)$": "<rootDir>/libs/domain-user/src/$1",
       "^@persistence/persistence(|/.*)$": "<rootDir>/libs/persistence/src/$1",
-      "^@domain/domain-manager(|/.*)$": "<rootDir>/libs/domain-manager/src/$1"
+      "^@domain/domain-manager(|/.*)$": "<rootDir>/libs/domain-manager/src/$1",
+      "^@infra/kakao(|/.*)$": "<rootDir>/libs/kakao/src/$1"
     }
   }
 }

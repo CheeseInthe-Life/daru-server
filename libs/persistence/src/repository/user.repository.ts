@@ -15,17 +15,6 @@ export class UserRepositoryImpl implements UserRepository {
       nickname,
     });
   }
-
-  async findUserByProviderId({
-    providerId,
-  }: {
-    providerId: string;
-  }): Promise<User> {
-    return await this.userRepository.findOneOrFail({
-      providerId,
-    });
-  }
-
   async findUserByUserId({ userId }: { userId: string }): Promise<User> {
     return User.of(await this.userRepository.findOneOrFail({ userId }));
   }

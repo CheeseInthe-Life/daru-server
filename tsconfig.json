@@ -71,6 +71,12 @@
       ],
       "@domain/domain-manager/*": [
         "libs/domain-manager/src/*"
+      ],
+      "@infra/kakao": [
+        "libs/kakao/src"
+      ],
+      "@infra/kakao/*": [
+        "libs/kakao/src/*"
       ]
     }
   }

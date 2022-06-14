@@ -80,6 +80,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/domain-manager/tsconfig.lib.json"
       }
+    },
+    "kakao": {
+      "type": "library",
+      "root": "libs/kakao",
+      "entryFile": "index",
+      "sourceRoot": "libs/kakao/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/kakao/tsconfig.lib.json"
+      }
     }
   }
 }
