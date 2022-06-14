@@ -108,7 +108,7 @@ export class AuthFacade {
     }
   }
 
-  async signIn(dto: SignInRequestDto): Promise<TokenPairDto> {
+  async signIn(dto: SignInRequestDto): Promise<TokenPairDto | null> {
     const { providerAccessToken, providerName } = dto;
     if (providerName === ProviderChannelEnum.카카오) {
       const { id } = await this.kakaoService.getAccount({
@@ -122,7 +122,7 @@ export class AuthFacade {
         })
         .catch((exception: EntityNotFoundError) => undefined);
 
-      if (!account) return { accessToken: null, refreshToken: null };
+      if (!account) return null;
 
       const tokenPair = this.createTokenPair({ userId: account.userId });
 

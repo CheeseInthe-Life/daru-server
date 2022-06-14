@@ -63,7 +63,7 @@ export class AuthController {
   @ApiCommonResponse(TokenPairDto)
   public async signInUser(
     @Body() dto: SignInRequestDto,
-  ): Promise<CommonResponse<TokenPairDto>> {
+  ): Promise<CommonResponse<TokenPairDto | null>> {
     return CommonResponse.success(await this.authFacade.signIn(dto));
   }
 
