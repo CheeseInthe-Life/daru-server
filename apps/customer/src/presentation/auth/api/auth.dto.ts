@@ -15,7 +15,7 @@ import {
 import { Optional } from '../../common/common-type';
 
 export class SignUpRequestDto {
-  @ApiProperty()
+  @ApiProperty({ enum: ProviderChannelEnum })
   @IsEnum(ProviderChannelEnum)
   providerName: ProviderChannelEnum;
   @ApiProperty()
@@ -33,7 +33,7 @@ export class SignUpRequestDto {
 }
 
 export class SignInRequestDto {
-  @ApiProperty()
+  @ApiProperty({ enum: ProviderChannelEnum })
   @IsEnum(ProviderChannelEnum)
   readonly providerName: ProviderChannelEnum;
   @ApiProperty()
