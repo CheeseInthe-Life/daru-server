@@ -26,9 +26,8 @@ export class HttpExceptionFilter implements ExceptionFilter {
         stackTrace: ${stack}
     `);
 
-    const errorMessage: null | string | object = (
-      exception.getResponse() as any
-    ).message;
+    const errorMessage: string | object = (exception.getResponse() as any)
+      .message;
 
     response.status(status).json(
       CommonResponse.fail({

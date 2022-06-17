@@ -12,6 +12,6 @@ async function bootstrap() {
   app.useGlobalFilters(new HttpExceptionFilter());
   app.useGlobalPipes(new ValidationPipe());
   swaggerLoader(app);
-  await app.listen(CUSTOMER_PORT);
+  await app.listen(CUSTOMER_PORT ?? 8888);
 }
 bootstrap();

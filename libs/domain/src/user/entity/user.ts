@@ -25,7 +25,7 @@ export class User {
     nickname: string;
     name: string;
     birthYear: string;
-    gender?: UserGenderEnum;
+    gender: UserGenderEnum | null;
   }): User {
     const user = new User();
     user.userId = userId;

@@ -46,7 +46,7 @@ export class AccountEntity {
   @Column({ length: 32 })
   userId: string;
 
-  @Column({ length: 256, nullable: true })
+  @Column({ length: 256, nullable: true, type: 'varchar' })
   refreshToken: string | null;
 
   @CreateDateColumn()
@@ -65,14 +65,14 @@ export class AccountEntity {
     connectedAt,
     username,
     userId,
-    refreshToken,
+    refreshToken = null,
   }: {
     providerId: string;
     providerName: ProviderChannelEnum;
     connectedAt: LocalDateTime;
     username: string;
     userId: string;
-    refreshToken?: string;
+    refreshToken?: string | null;
   }): AccountEntity {
     const account = new AccountEntity();
     account.providerId = providerId;
@@ -88,11 +88,11 @@ export class AccountEntity {
     if (refreshToken) this.refreshToken = refreshToken;
   }
 
-  getCreatedAt(): LocalDateTime {
+  getCreatedAt(): LocalDateTime | null {
     return DateTimeUtil.toLocalDateTime(this.createdAt);
   }
 
-  getUpdatedAt(): LocalDateTime {
+  getUpdatedAt(): LocalDateTime | null {
     return DateTimeUtil.toLocalDateTime(this.updatedAt);
   }
 }

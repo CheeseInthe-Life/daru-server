@@ -13,13 +13,13 @@ export class RegisterManagerCommand {
     phone,
     password,
     birthday,
-    gender,
+    gender = null,
   }: {
     email: string;
     phone: string;
     password: string;
     birthday: LocalDate;
-    gender?: ManagerGenderEnum;
+    gender?: ManagerGenderEnum | null;
   }) {
     this.email = email;
     this.phone = phone;

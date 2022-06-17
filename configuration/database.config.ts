@@ -37,7 +37,7 @@ export default registerAs('database', (): ConnectionOptions => {
   return {
     ...baseOption,
     host: DARU_DATABASE_HOST ?? '127.0.0.1',
-    port: +DARU_DATABASE_PORT ?? 3306,
+    port: +(DARU_DATABASE_PORT as string) ?? 3306,
     username: DARU_DATABASE_USERNAME ?? 'admin',
     password: DARU_DATABASE_PASSWORD,
     database: DARU_DATABASE_NAME,

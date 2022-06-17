@@ -1,6 +1,6 @@
 import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
-import { TypeOrmModule } from '@nestjs/typeorm';
+import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { AppController } from '../presentation/root/app/app.controller';
 import { AuthModule } from './auth.module';
 import { UserModule } from './user.module';
@@ -19,7 +19,7 @@ import customerJwtConfig from 'configuration/customer.jwt.config';
       imports: [ConfigModule],
       inject: [ConfigService],
       useFactory: async (configService: ConfigService) =>
-        configService.get('database'),
+        configService.get('database') as TypeOrmModuleOptions,
     }),
     JwtModule.registerAsync({
       imports: [ConfigModule],

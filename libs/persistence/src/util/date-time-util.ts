@@ -1,8 +1,7 @@
 import { LocalDate, LocalDateTime, nativeJs } from '@js-joda/core';
 
 export class DateTimeUtil {
-  static toLocalDateTime(date: Date | string | null): LocalDateTime | null {
-    if (date === null) return null;
+  static toLocalDateTime(date: Date | string): LocalDateTime {
     return LocalDateTime.from(
       typeof date === 'object'
         ? nativeJs(date)
@@ -10,8 +9,7 @@ export class DateTimeUtil {
     );
   }
 
-  static toLocalDate(date: Date | string | null): LocalDate | null {
-    if (date === null) return null;
+  static toLocalDate(date: Date | string): LocalDate {
     return LocalDate.from(
       typeof date === 'object'
         ? nativeJs(date)
@@ -19,8 +17,7 @@ export class DateTimeUtil {
     );
   }
 
-  static toDate(date: LocalDateTime | LocalDate | null): Date | null {
-    if (date === null) return null;
+  static toDate(date: LocalDateTime | LocalDate): Date {
     return new Date(date.toString());
   }
 }

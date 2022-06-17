@@ -14,7 +14,7 @@ export class UserMainDto {
 
   @IsEnum(UserGenderEnum)
   @IsOptional()
-  gender?: UserGenderEnum;
+  gender?: UserGenderEnum | null;
 
   @IsNumberString({ length: 4 })
   birthYear: string;

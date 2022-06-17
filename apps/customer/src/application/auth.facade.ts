@@ -58,8 +58,13 @@ export class AuthFacade {
   }
 
   async signUp(dto: SignUpRequestDto): Promise<TokenPairDto> {
-    const { birthYear, gender, nickname, providerName, providerAccessToken } =
-      dto;
+    const {
+      birthYear,
+      gender = null,
+      nickname,
+      providerName,
+      providerAccessToken,
+    } = dto;
 
     if (providerName === ProviderChannelEnum.카카오) {
       const { id, connected_at, properties } =
@@ -109,7 +114,7 @@ export class AuthFacade {
     }
   }
 
-  async signIn(dto: SignInRequestDto): Promise<TokenPairDto | null> {
+  async signIn(dto: SignInRequestDto): Promise<TokenPairDto> {
     const { providerAccessToken, providerName } = dto;
     if (providerName === ProviderChannelEnum.카카오) {
       const { id } = await this.kakaoService.getAccount({
@@ -134,6 +139,8 @@ export class AuthFacade {
       await this.accountRepository.store(account);
 
       return tokenPair;
+    } else {
+      throw new ProviderNotSupportedException();
     }
   }
 

@@ -5,7 +5,7 @@ export class RegisterUserCommand {
   providerId: string;
   nickname: string;
   name: string;
-  gender: UserGenderEnum;
+  gender: UserGenderEnum | null;
   birthYear: string;
 
   constructor({
@@ -16,7 +16,7 @@ export class RegisterUserCommand {
   }: {
     nickname: string;
     name: string;
-    gender: UserGenderEnum;
+    gender: UserGenderEnum | null;
     birthYear: string;
   }) {
     this.nickname = nickname;

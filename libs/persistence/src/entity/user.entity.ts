@@ -30,6 +30,7 @@ export class UserEntity {
   @Column({
     nullable: true,
     length: 8,
+    type: 'varchar',
   })
   gender: UserGenderEnum | null;
 

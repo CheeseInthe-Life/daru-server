@@ -14,18 +14,18 @@ export class CommonResponse<T> {
   @ApiProperty()
   data: Nullable<T>;
   @ApiPropertyOptional({ type: String })
-  message: Optional<string>;
+  message: Nullable<string>;
   @ApiProperty({ type: Number, example: 200 })
-  statusCode: Optional<HttpStatus>;
+  statusCode: Nullable<HttpStatus>;
   @ApiPropertyOptional({ type: String })
-  name: Optional<string>;
+  name: Nullable<string>;
   @ApiProperty()
   timestamp: string;
 
   private constructor({
     data,
-    statusCode,
-    message,
+    statusCode = null,
+    message = null,
     result,
   }: {
     result: Result;

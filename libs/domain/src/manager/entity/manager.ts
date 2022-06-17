@@ -24,9 +24,9 @@ export class Manager {
     password,
     birthday,
     gender,
-    createdAt,
-    updatedAt,
-    deletedAt,
+    createdAt = new Date(),
+    updatedAt = new Date(),
+    deletedAt = new Date(),
   }: {
     managerId: string;
     email: string;
@@ -62,7 +62,7 @@ export class Manager {
     phone: string;
     password: string;
     birthday: LocalDate;
-    gender?: ManagerGenderEnum;
+    gender?: ManagerGenderEnum | null;
   }): Manager {
     return new Manager({
       managerId,
