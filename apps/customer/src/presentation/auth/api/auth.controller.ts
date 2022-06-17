@@ -4,6 +4,7 @@ import {
   Get,
   HttpCode,
   HttpStatus,
+  Logger,
   Post,
   Req,
   UseGuards,
@@ -62,7 +63,8 @@ export class AuthController {
   @ApiCommonResponse(TokenPairDto)
   public async signInUser(
     @Body() dto: SignInRequestDto,
-  ): Promise<CommonResponse<TokenPairDto | null>> {
+  ): Promise<CommonResponse<TokenPairDto>> {
+    Logger.debug(typeof TokenPairDto);
     return CommonResponse.success(await this.authFacade.signIn(dto));
   }
 

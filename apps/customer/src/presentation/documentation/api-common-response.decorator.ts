@@ -15,7 +15,6 @@ export const ApiCommonResponse = (
   if (
     typeof dto === 'string' ||
     typeof dto === 'number' ||
-    typeof dto === 'bigint' ||
     typeof dto === 'boolean'
   ) {
     return applyDecorators(
@@ -34,7 +33,7 @@ export const ApiCommonResponse = (
         },
       }),
     );
-  } else if (typeof dto === 'object') {
+  } else if (typeof dto === 'object' || typeof dto === 'function') {
     return applyDecorators(
       ApiExtraModels(dto),
       ApiOkResponse({
@@ -62,7 +61,7 @@ export const ApiCommonResponse = (
             {
               properties: {
                 data: {
-                  type: 'unknown',
+                  $ref: getSchemaPath(dto),
                 },
               },
             },
