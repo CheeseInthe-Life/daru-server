@@ -1,4 +1,4 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import { Request } from 'express';
@@ -6,7 +6,6 @@ import {
   AccountEntity,
   ProviderChannelEnum,
 } from '@infra/persistence/entity/account.entity';
-import { UserService } from '@domain/domain-user';
 import {
   SignInRequestDto,
   SignUpRequestDto,
@@ -14,14 +13,16 @@ import {
   UserNicknameValidationRequestDto,
   UserNicknameValidationResponseDto,
 } from '../presentation/auth/api/auth.dto';
-import { UserDIToken } from '@domain/domain-user/di/domain-user.token';
 import { EntityNotFoundError } from 'typeorm';
 import { AccountRepositoryImpl } from '@infra/persistence/repository/account.repository';
 import { KakaoService } from '@infra/kakao';
 import { DateTimeUtil } from '@infra/persistence/util/date-time-util';
-import { RegisterUserCommand } from '@domain/domain-user/dto/user.command';
 import { ProviderNotSupportedException } from '../presentation/common/exception/provider-not-supported.exception';
 import { UserAlreadyRegisterException } from '../presentation/common/exception/user-already-register-exception';
+import { UserDIToken } from '@domain/domain/user/di/domain-user.token';
+import { UserService } from '@domain/domain/user/service/domain-user.service';
+import { RegisterUserCommand } from '@domain/domain/user/dto/user.command';
+import { UnauthorizedExceptionMessage } from '../presentation/common/constant/error-message';
 
 export interface JwtPayload {
   userId: string;
@@ -122,7 +123,10 @@ export class AuthFacade {
         })
         .catch((exception: EntityNotFoundError) => undefined);
 
-      if (!account) return null;
+      if (!account)
+        throw new UnauthorizedException(
+          UnauthorizedExceptionMessage.notRegisterUser,
+        );
 
       const tokenPair = this.createTokenPair({ userId: account.userId });
 

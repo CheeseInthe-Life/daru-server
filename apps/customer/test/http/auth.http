@@ -26,13 +26,13 @@ Content-Type: application/json; charset=utf-8
 
 {
     "providerName": "KAKAO",
-    "providerAccessToken": "ebq7FRIHZ0qjbKdcky8_M4G58sx8a4ddJgH8fZUICisMpwAAAYFiFPq9"
+    "providerAccessToken": "KQO-LNolpMrLisV5ck6BUUvOQ5CDQYl6fghhqaxaCj1zGAAAAYFxkLe3"
 }
 
 ###
 POST https://kapi.kakao.com/v2/user/me HTTP/1.1
 Content-type: 'application/x-www-form-urlencoded;charset=utf-8',
-Authorization: Bearer QH1c7DMDPVdjJVwtiAgrL767wH6lOj_8JA_SINmeCj10mAAAAYFhXHar
+Authorization: Bearer KQO-
 
 {
 

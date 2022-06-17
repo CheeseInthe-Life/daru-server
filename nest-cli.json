@@ -54,15 +54,6 @@
         "tsConfigPath": "libs/auth-strategy/tsconfig.lib.json"
       }
     },
-    "domain-user": {
-      "type": "library",
-      "root": "libs/domain-user",
-      "entryFile": "index",
-      "sourceRoot": "libs/domain-user/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/domain-user/tsconfig.lib.json"
-      }
-    },
     "persistence": {
       "type": "library",
       "root": "libs/persistence",
@@ -72,15 +63,6 @@
         "tsConfigPath": "libs/persistence/tsconfig.lib.json"
       }
     },
-    "domain-manager": {
-      "type": "library",
-      "root": "libs/domain-manager",
-      "entryFile": "index",
-      "sourceRoot": "libs/domain-manager/src",
-      "compilerOptions": {
-        "tsConfigPath": "libs/domain-manager/tsconfig.lib.json"
-      }
-    },
     "kakao": {
       "type": "library",
       "root": "libs/kakao",
@@ -88,6 +70,15 @@
       "sourceRoot": "libs/kakao/src",
       "compilerOptions": {
         "tsConfigPath": "libs/kakao/tsconfig.lib.json"
+      }
+    },
+    "domain": {
+      "type": "library",
+      "root": "libs/domain",
+      "entryFile": "index",
+      "sourceRoot": "libs/domain/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/domain/tsconfig.lib.json"
       }
     }
   }

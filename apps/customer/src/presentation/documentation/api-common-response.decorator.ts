@@ -1,4 +1,8 @@
-import { applyDecorators, Type } from '@nestjs/common';
+import {
+  applyDecorators,
+  InternalServerErrorException,
+  Type,
+} from '@nestjs/common';
 import { ApiExtraModels, ApiOkResponse, getSchemaPath } from '@nestjs/swagger';
 import { CommonResponse } from '../common/response/common-response';
 
@@ -8,7 +12,12 @@ export const ApiCommonResponse = (
   dto: Type<unknown> | PrimitiveType,
   failResponseList?: Type<unknown>[],
 ) => {
-  if (typeof dto !== 'object' || typeof dto !== 'function') {
+  if (
+    typeof dto === 'string' ||
+    typeof dto === 'number' ||
+    typeof dto === 'bigint' ||
+    typeof dto === 'boolean'
+  ) {
     return applyDecorators(
       ApiOkResponse({
         schema: {
@@ -18,6 +27,24 @@ export const ApiCommonResponse = (
               properties: {
                 data: {
                   type: typeof dto,
+                },
+              },
+            },
+          ],
+        },
+      }),
+    );
+  } else if (typeof dto === 'object') {
+    return applyDecorators(
+      ApiExtraModels(dto),
+      ApiOkResponse({
+        schema: {
+          allOf: [
+            { $ref: getSchemaPath(CommonResponse) },
+            {
+              properties: {
+                data: {
+                  $ref: getSchemaPath(dto),
                 },
               },
             },
@@ -35,7 +62,7 @@ export const ApiCommonResponse = (
             {
               properties: {
                 data: {
-                  $ref: getSchemaPath(dto),
+                  type: 'unknown',
                 },
               },
             },

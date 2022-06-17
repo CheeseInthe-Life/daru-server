@@ -1,5 +1,4 @@
-import { TokenPair } from '@domain/domain-user/dto/user.info';
-import { UserGenderEnum } from '@domain/domain-user/entity/user';
+import { UserGenderEnum } from '@domain/domain/user/entity/user';
 import {
   AccountEntity,
   ProviderChannelEnum,

@@ -1,6 +1,6 @@
-import { UserMainInfo } from '@domain/domain-user/dto/user.info';
-import { UserGenderEnum } from '@domain/domain-user/entity/user';
-import { IsEnum, IsNumberString, IsString } from 'class-validator';
+import { UserMainInfo } from '@domain/domain/user/dto/user.info';
+import { UserGenderEnum } from '@domain/domain/user/entity/user';
+import { IsEnum, IsNumberString, IsOptional, IsString } from 'class-validator';
 
 export class UserMainDto {
   @IsString()
@@ -13,12 +13,19 @@ export class UserMainDto {
   name: string;
 
   @IsEnum(UserGenderEnum)
-  gender: UserGenderEnum | null;
+  @IsOptional()
+  gender?: UserGenderEnum;
 
   @IsNumberString({ length: 4 })
   birthYear: string;
 
-  constructor({ nickname, userId, name, gender, birthYear }: UserMainInfo) {
+  constructor({
+    nickname,
+    userId,
+    name,
+    gender = null,
+    birthYear,
+  }: UserMainInfo) {
     this.nickname = nickname;
     this.userId = userId;
     this.name = name;

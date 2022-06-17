@@ -1,4 +1,4 @@
-import { UserGenderEnum } from '@domain/domain-user/entity/user';
+import { UserGenderEnum } from '@domain/domain/user/entity/user';
 import {
   Column,
   CreateDateColumn,

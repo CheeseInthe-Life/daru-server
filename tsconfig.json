@@ -77,6 +77,12 @@
       ],
       "@infra/kakao/*": [
         "libs/kakao/src/*"
+      ],
+      "@domain/domain": [
+        "libs/domain/src"
+      ],
+      "@domain/domain/*": [
+        "libs/domain/src/*"
       ]
     }
   }

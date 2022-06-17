@@ -104,7 +104,8 @@
       "^@domain/domain-user(|/.*)$": "<rootDir>/libs/domain-user/src/$1",
       "^@persistence/persistence(|/.*)$": "<rootDir>/libs/persistence/src/$1",
       "^@domain/domain-manager(|/.*)$": "<rootDir>/libs/domain-manager/src/$1",
-      "^@infra/kakao(|/.*)$": "<rootDir>/libs/kakao/src/$1"
+      "^@infra/kakao(|/.*)$": "<rootDir>/libs/kakao/src/$1",
+      "^@domain/domain(|/.*)$": "<rootDir>/libs/domain/src/$1"
     }
   }
 }

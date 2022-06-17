@@ -1,4 +1,4 @@
-import { DomainUserModule } from '@domain/domain-user';
+import { DomainModule } from '@domain/domain';
 import { AuthStrategyModule } from '@infra/auth-strategy';
 import { KakaoModule } from '@infra/kakao';
 import { PersistenceModule } from '@infra/persistence';
@@ -12,7 +12,7 @@ import { AuthController } from '../presentation/auth/api/auth.controller';
     AuthStrategyModule,
     JwtModule,
     PersistenceModule,
-    DomainUserModule,
+    DomainModule,
     KakaoModule,
   ],
   controllers: [AuthController],
