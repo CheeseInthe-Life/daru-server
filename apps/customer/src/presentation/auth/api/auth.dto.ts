@@ -4,6 +4,7 @@ import {
   ProviderChannelEnum,
 } from '@infra/persistence/entity/account.entity';
 import { ApiProperty } from '@nestjs/swagger';
+import { Optional } from 'apps/common-type';
 import {
   IsBoolean,
   IsEnum,
@@ -11,7 +12,6 @@ import {
   IsNumberString,
   IsString,
 } from 'class-validator';
-import { Optional } from '../../common/common-type';
 
 export class SignUpRequestDto {
   @ApiProperty({ enum: ProviderChannelEnum })

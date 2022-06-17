@@ -1,4 +1,5 @@
-@URL = http://localhost:8888
+# @URL = http://localhost:8888
+@URL = https://customer.cheeseinthelife.com
 
 ###
 POST {{URL}}/api/v1/auth/users/nickname/verification HTTP/1.1

@@ -6,7 +6,7 @@ import { AuthModule } from './auth.module';
 import { UserModule } from './user.module';
 import { JwtModule } from '@nestjs/jwt';
 import databaseConfig from 'configuration/database.config';
-import { validate } from 'configuration/costomer.env.validation';
+import { validate } from 'configuration/customer.env.validation';
 import customerJwtConfig from 'configuration/customer.jwt.config';
 @Module({
   imports: [
