@@ -42,6 +42,21 @@ class EnvironmentVariables {
 
   @IsString()
   DARU_DATABASE_NAME: string;
+
+  @IsString()
+  NAVER_ACCESS_KEY: string;
+
+  @IsString()
+  NAVER_SECRET: string;
+
+  @IsString()
+  NAVER_SMS_SERVICE_ID: string;
+
+  @IsString()
+  NAVER_SMS_SERVICE_SECRET: string;
+
+  @IsString()
+  NAVER_SMS_FROM_AUTH_NUMBER: string;
 }
 
 export function validate(config: Record<string, unknown>) {
