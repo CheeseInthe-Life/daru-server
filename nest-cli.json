@@ -80,6 +80,15 @@
       "compilerOptions": {
         "tsConfigPath": "libs/domain/tsconfig.lib.json"
       }
+    },
+    "naver": {
+      "type": "library",
+      "root": "libs/naver",
+      "entryFile": "index",
+      "sourceRoot": "libs/naver/src",
+      "compilerOptions": {
+        "tsConfigPath": "libs/naver/tsconfig.lib.json"
+      }
     }
   }
 }
