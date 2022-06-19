@@ -1,2 +1,2 @@
 export * from './naver.module';
-export * from './naver.service';
+export * from './notification.service';
