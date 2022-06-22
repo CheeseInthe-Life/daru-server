@@ -1,5 +1,4 @@
-import { DateTimeUtil } from '@infra/persistence/util/date-time-util';
-import { LocalDate, LocalDateTime } from '@js-joda/core';
+import { LocalDate } from '@js-joda/core';
 import { ulid } from 'ulid';
 export enum ManagerGenderEnum {
   남성 = 'MALE',

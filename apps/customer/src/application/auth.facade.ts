@@ -19,8 +19,8 @@ import { KakaoService } from '@infra/kakao';
 import { DateTimeUtil } from '@infra/persistence/util/date-time-util';
 import { ProviderNotSupportedException } from '../presentation/common/exception/provider-not-supported.exception';
 import { UserAlreadyRegisterException } from '../presentation/common/exception/user-already-register-exception';
-import { UserDIToken } from '@domain/domain/user/di/domain-user.token';
-import { UserService } from '@domain/domain/user/service/domain-user.service';
+import { UserDIToken } from '@domain/domain/user/di/user.token';
+import { UserService } from '@domain/domain/user/service/user.service';
 import { RegisterUserCommand } from '@domain/domain/user/dto/user.command';
 import { UnauthorizedExceptionMessage } from '../presentation/common/constant/error-message';
 

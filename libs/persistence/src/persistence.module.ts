@@ -1,4 +1,4 @@
-import { UserDIToken } from '@domain/domain/user/di/domain-user.token';
+import { UserDIToken } from '@domain/domain/user/di/user.token';
 import { Module, Provider } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { AccountEntity } from './entity/account.entity';

@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
-import { DomainManagerModule } from './manager/di/domain-manager.module';
-import { DomainUserModule } from './user/di/domain-user.module';
+import { ManagerModule } from './manager/di/manager.module';
+import { UserModule } from './user/di/user.module';
 
 @Module({
-  imports: [DomainUserModule, DomainManagerModule],
+  imports: [UserModule, ManagerModule],
   providers: [],
-  exports: [DomainUserModule, DomainManagerModule],
+  exports: [UserModule, ManagerModule],
 })
 export class DomainModule {}

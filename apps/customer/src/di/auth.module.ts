@@ -18,4 +18,4 @@ import { AuthController } from '../presentation/auth/api/auth.controller';
   controllers: [AuthController],
   providers: [AuthFacade],
 })
-export class AuthModule {}
+export class AuthApplicationModule {}

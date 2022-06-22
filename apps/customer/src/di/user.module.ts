@@ -8,4 +8,4 @@ import { UserController } from '../presentation/user/api/user.controller';
   providers: [UserFacade],
   controllers: [UserController],
 })
-export class UserModule {}
+export class UserApplicationModule {}

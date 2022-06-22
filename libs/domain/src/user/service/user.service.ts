@@ -1,5 +1,5 @@
 import { Inject, Injectable } from '@nestjs/common';
-import { UserDIToken } from '../di/domain-user.token';
+import { UserDIToken } from '../di/user.token';
 import { RegisterUserCommand } from '../dto/user.command';
 import {
   RetrieveUserByNickname,

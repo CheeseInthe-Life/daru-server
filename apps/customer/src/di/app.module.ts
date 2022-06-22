@@ -2,8 +2,8 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
 import { AppController } from '../presentation/root/app/app.controller';
-import { AuthModule } from './auth.module';
-import { UserModule } from './user.module';
+import { AuthApplicationModule } from './auth.module';
+import { UserApplicationModule } from './user.module';
 import { JwtModule } from '@nestjs/jwt';
 import databaseConfig from 'configuration/database.config';
 import { validate } from 'configuration/customer.env.validation';
@@ -31,8 +31,8 @@ import customerJwtConfig from 'configuration/customer.jwt.config';
       }),
       inject: [ConfigService],
     }),
-    AuthModule,
-    UserModule,
+    AuthApplicationModule,
+    UserApplicationModule,
   ],
   controllers: [AppController],
 })

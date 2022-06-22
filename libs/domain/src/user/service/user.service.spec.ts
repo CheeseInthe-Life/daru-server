@@ -1,5 +1,5 @@
 import { Test, TestingModule } from '@nestjs/testing';
-import { UserServiceImpl } from './domain-user.service';
+import { UserServiceImpl } from './user.service';
 
 describe('UserServiceImpl', () => {
   let service: UserServiceImpl;
