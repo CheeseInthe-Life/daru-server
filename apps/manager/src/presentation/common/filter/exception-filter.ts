@@ -19,12 +19,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const name = exception.name;
     const stack = exception.stack;
 
-    Logger.error(`
-        name: ${name},
-        message: ${message},
-        status: ${status},
-        stackTrace: ${stack}
-    `);
+    if (status != 404) {
+      Logger.error(`
+          name: ${name},
+          message: ${message},
+          status: ${status},
+          stackTrace: ${stack}
+      `);
+    }
 
     const errorMessage: string | object = (exception.getResponse() as any)
       .message;

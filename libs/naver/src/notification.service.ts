@@ -1,11 +1,15 @@
 import 'dotenv/config';
 import { HttpService } from '@nestjs/axios';
 import { Injectable } from '@nestjs/common';
-import { NotificationService, SendSMSResult, SMS } from 'libs/infra.interface';
 import { AxiosRequestConfig } from 'axios';
 import crypto from 'crypto';
 import { lastValueFrom } from 'rxjs';
 import { SMSException } from './sms.exception';
+import {
+  NotificationService,
+  SendSMSResult,
+  SMS,
+} from '@domain/domain/interface/service/notification.service';
 
 const {
   NAVER_ACCESS_KEY,
