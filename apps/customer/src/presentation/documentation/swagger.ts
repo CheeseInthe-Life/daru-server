@@ -1,10 +1,6 @@
 import { INestApplication } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 import { CommonResponse } from '../common/response/common-response';
-import {
-  TeaHouseAddressDto,
-  TeaHouseScheduleDto,
-} from '../tea-house/tea-house.dto';
 
 export const swaggerLoader = (application: INestApplication) => {
   const config = new DocumentBuilder()
