@@ -1,4 +1,3 @@
-import { ulid } from 'ulid';
 import { UserGenderEnum, User } from '../entity/user';
 
 export class RegisterUserCommand {
@@ -26,8 +25,7 @@ export class RegisterUserCommand {
   }
 
   toUser(): User {
-    return User.of({
-      userId: ulid(),
+    return new User({
       nickname: this.nickname,
       name: this.name,
       gender: this.gender,

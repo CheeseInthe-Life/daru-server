@@ -16,17 +16,17 @@ export class UserRepositoryImpl implements UserRepository {
     });
   }
   async findUserByUserId({ userId }: { userId: string }): Promise<User> {
-    return User.of(await this.userRepository.findOneOrFail({ userId }));
+    return await (await this.userRepository.findOneOrFail({ userId })).toUser();
   }
 
   async findUserList(): Promise<User[]> {
     const userEntityList: UserEntity[] = await this.userRepository.find();
     return userEntityList.map((userEntity) => {
-      return User.of(userEntity);
+      return userEntity.toUser();
     });
   }
 
   async store(user: User): Promise<User> {
-    return User.of(await this.userRepository.save(user));
+    return await (await this.userRepository.save(user)).toUser();
   }
 }

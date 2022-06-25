@@ -1,4 +1,4 @@
-import { UserGenderEnum } from '@domain/domain/user/entity/user';
+import { User, UserGenderEnum } from '@domain/domain/user/entity/user';
 import {
   Column,
   CreateDateColumn,
@@ -48,4 +48,8 @@ export class UserEntity {
 
   @DeleteDateColumn()
   readonly deletedAt: Date | null;
+
+  toUser(): User {
+    return new User(this);
+  }
 }

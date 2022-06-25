@@ -8,6 +8,7 @@ import { JwtModule } from '@nestjs/jwt';
 import databaseConfig from 'configuration/database.config';
 import { validate } from 'configuration/customer.env.validation';
 import customerJwtConfig from 'configuration/customer.jwt.config';
+import { TeaHouseApplicationModule } from './tea-house.module';
 @Module({
   imports: [
     ConfigModule.forRoot({
@@ -33,6 +34,7 @@ import customerJwtConfig from 'configuration/customer.jwt.config';
     }),
     AuthApplicationModule,
     UserApplicationModule,
+    TeaHouseApplicationModule,
   ],
   controllers: [AppController],
 })

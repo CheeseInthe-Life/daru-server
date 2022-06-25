@@ -1,6 +1,7 @@
 import {
   Injectable,
   InternalServerErrorException,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
@@ -57,15 +58,29 @@ export class KakaoService {
        */
       const kakaoErrorCode = error.response.data.code;
 
+      Logger.debug('kakaoErrorCode');
+      Logger.debug(kakaoErrorCode);
+
       switch (kakaoErrorCode) {
-        case -1:
+        case -1: {
           throw new KakaoServiceException();
-        case -2 || -401:
+          break;
+        }
+        case -2: {
           throw new UnauthorizedException(
             UnauthorizedExceptionMessage.invalidToken,
           );
-        default:
+          break;
+        }
+        case -401: {
+          throw new UnauthorizedException(
+            UnauthorizedExceptionMessage.invalidToken,
+          );
+          break;
+        }
+        default: {
           throw new InternalServerErrorException();
+        }
       }
     }
   }

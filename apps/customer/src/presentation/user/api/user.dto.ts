@@ -1,31 +1,16 @@
 import { UserMainInfo } from '@domain/domain/user/dto/user.info';
-import { UserGenderEnum } from '@domain/domain/user/entity/user';
-import { IsEnum, IsNumberString, IsOptional, IsString } from 'class-validator';
+import { User } from '@domain/domain/user/entity/user';
+import { PickType } from '@nestjs/mapped-types';
 
-export class UserMainDto {
-  @IsString()
-  userId: string;
-
-  @IsString()
-  nickname: string;
-
-  @IsString()
-  name: string;
-
-  @IsEnum(UserGenderEnum)
-  @IsOptional()
-  gender?: UserGenderEnum | null;
-
-  @IsNumberString({ length: 4 })
-  birthYear: string;
-
-  constructor({
-    nickname,
-    userId,
-    name,
-    gender = null,
-    birthYear,
-  }: UserMainInfo) {
+export class UserMainDto extends PickType(User, [
+  'userId',
+  'birthYear',
+  'gender',
+  'name',
+  'nickname',
+] as const) {
+  constructor({ nickname, userId, name, gender, birthYear }: UserMainInfo) {
+    super();
     this.nickname = nickname;
     this.userId = userId;
     this.name = name;

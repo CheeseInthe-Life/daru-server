@@ -30,8 +30,8 @@ export class ManagerEntity {
   })
   birthday: LocalDate;
 
-  @Column({ nullable: true })
-  gender: ManagerGenderEnum | null;
+  @Column({ type: 'enum', nullable: true, enum: ManagerGenderEnum })
+  gender?: ManagerGenderEnum;
 
   @CreateDateColumn()
   readonly createdAt: Date;
@@ -40,5 +40,5 @@ export class ManagerEntity {
   readonly updatedAt: Date;
 
   @DeleteDateColumn()
-  readonly deletedAt: Date | null;
+  readonly deletedAt?: Date;
 }

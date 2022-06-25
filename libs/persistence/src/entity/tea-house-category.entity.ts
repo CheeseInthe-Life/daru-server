@@ -11,6 +11,7 @@ export class TeaHouseCategoryEntity {
 
   @Column({
     type: 'enum',
+    enum: TeaHouseCategoryStatusEnum,
   })
   status: TeaHouseCategoryStatusEnum;
 }

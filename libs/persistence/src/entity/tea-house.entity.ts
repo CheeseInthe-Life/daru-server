@@ -35,8 +35,9 @@ export class TeaHouseEntity {
   @Column()
   name: string;
 
-  @Type(() => TeaHouseAddress)
-  @Column()
+  @Column(() => TeaHouseAddress, {
+    prefix: false,
+  })
   teaHouseAddress: TeaHouseAddress;
 
   @Column({ nullable: true })

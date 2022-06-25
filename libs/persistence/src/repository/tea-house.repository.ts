@@ -20,4 +20,10 @@ export class TeaHouseRepositoryImpl implements TeaHouseRepository {
       await this.teaHouseRepository.findOneOrFail({ teaHouseId })
     ).toDomain();
   }
+
+  async findAll(): Promise<TeaHouse[]> {
+    return (await this.teaHouseRepository.find()).map(
+      (teaHouse: TeaHouseEntity) => teaHouse.toDomain(),
+    );
+  }
 }

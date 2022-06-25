@@ -16,7 +16,7 @@ export class TeaHouseService {
     private readonly teaHouseRepository: TeaHouseRepository,
   ) {}
   // 차집 시스템 등록
-  async createTeaHouse(command: TeaHouseRegisterCommand) {
+  async createTeaHouse(command: TeaHouseRegisterCommand): Promise<TeaHouse> {
     return await this.teaHouseRepository.store(command.toEntity());
   }
 
@@ -55,7 +55,7 @@ export class TeaHouseService {
   }
 
   // 차집 수정
-  async updateTeaHouse(command: TeaHouseUpdateCommand) {
+  async updateTeaHouse(command: TeaHouseUpdateCommand): Promise<TeaHouse> {
     const { teaHouseId, ...updateProperty } = command;
     const teaHouse = await this.teaHouseRepository.findById(command.teaHouseId);
     teaHouse.update({ ...updateProperty });
@@ -63,9 +63,19 @@ export class TeaHouseService {
   }
 
   // 차집 폐업
-  async closeTeaHouse(teaHouseId: string) {
+  async closeTeaHouse(teaHouseId: string): Promise<TeaHouse> {
     const teaHouse = await this.teaHouseRepository.findById(teaHouseId);
     teaHouse.closeTeaHouse();
     return await this.teaHouseRepository.store(teaHouse);
+  }
+
+  //차집 조회
+  async retrieveTeaHouseList(): Promise<TeaHouse[]> {
+    return await this.teaHouseRepository.findAll();
+  }
+
+  //특정 차집 조회
+  async retrieveTeaHouse(teaHouseId: string): Promise<TeaHouse> {
+    return await this.teaHouseRepository.findById(teaHouseId);
   }
 }

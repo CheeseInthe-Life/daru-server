@@ -10,11 +10,7 @@ export class User {
   gender: UserGenderEnum | null;
   birthYear: string;
 
-  private constructor() {
-    return;
-  }
-
-  static of({
+  constructor({
     userId = ulid(),
     nickname,
     gender,
@@ -26,13 +22,11 @@ export class User {
     name: string;
     birthYear: string;
     gender: UserGenderEnum | null;
-  }): User {
-    const user = new User();
-    user.userId = userId;
-    user.nickname = nickname;
-    user.gender = gender;
-    user.birthYear = birthYear;
-    user.name = name;
-    return user;
+  }) {
+    this.userId = userId;
+    this.nickname = nickname;
+    this.gender = gender;
+    this.birthYear = birthYear;
+    this.name = name;
   }
 }
