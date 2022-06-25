@@ -1,25 +1,95 @@
-import { TeaHouse } from '@domain/domain/tea-house/entity/tea-house';
-import { PickType } from '@nestjs/swagger';
+import {
+  TeaHouse,
+  TeaHouseStatus,
+} from '@domain/domain/tea-house/entity/tea-house';
+import { ApiProperty } from '@nestjs/swagger';
 
-export class TeaHouseMainDto extends PickType(TeaHouse, [
-  'teaHouseId',
-  'managerId',
-  'name',
-  'teaHouseAddress',
-  'teaHouseContractNumber',
-  'categoryOfBusiness',
-  'schedule',
-  'businessLicenseCopy',
-  'isRepresentative',
-  'instagramUrl',
-  'etcLinkUrl',
-  'status',
-  'createdAt',
-  'updatedAt',
-  'deletedAt',
-] as const) {
+export class TeaHouseAddressDto {
+  @ApiProperty()
+  address: string;
+  @ApiProperty()
+  detailAddress: string;
+  @ApiProperty()
+  postcode: string;
+}
+
+class Schedule {
+  @ApiProperty()
+  isWork: boolean;
+  @ApiProperty()
+  startTime: string;
+  @ApiProperty()
+  endTime: string;
+}
+
+export class TeaHouseScheduleDto {
+  @ApiProperty()
+  monday: Schedule;
+  @ApiProperty()
+  tuesday: Schedule;
+  @ApiProperty()
+  wednesday: Schedule;
+  @ApiProperty()
+  thursday: Schedule;
+  @ApiProperty()
+  friday: Schedule;
+  @ApiProperty()
+  saturday: Schedule;
+  @ApiProperty()
+  sunday: Schedule;
+  @ApiProperty()
+  etc?: {
+    contents: string;
+  };
+}
+
+export class TeaHouseMainDto {
+  @ApiProperty()
+  teaHouseId: string;
+
+  @ApiProperty()
+  managerId?: string;
+
+  @ApiProperty()
+  name: string;
+
+  @ApiProperty()
+  teaHouseAddress: TeaHouseAddressDto;
+
+  @ApiProperty()
+  teaHouseContractNumber?: string;
+
+  @ApiProperty()
+  categoryOfBusiness: string;
+
+  @ApiProperty()
+  schedule: TeaHouseScheduleDto;
+
+  @ApiProperty()
+  businessLicenseCopy?: string;
+
+  @ApiProperty()
+  isRepresentative?: boolean;
+
+  @ApiProperty()
+  instagramUrl?: string;
+
+  @ApiProperty()
+  etcLinkUrl?: string;
+
+  @ApiProperty()
+  status: TeaHouseStatus;
+
+  @ApiProperty()
+  createdAt?: Date;
+
+  @ApiProperty()
+  updatedAt?: Date;
+
+  @ApiProperty()
+  deletedAt?: Date;
+
   constructor(teaHouse: TeaHouse) {
-    super();
     this.teaHouseId = teaHouse.teaHouseId;
     this.managerId = teaHouse.managerId;
     this.name = teaHouse.name;
