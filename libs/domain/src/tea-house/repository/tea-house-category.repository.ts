@@ -1,6 +1,6 @@
 import { TeaHouse } from '../entity/tea-house';
 
 export interface TeaHouseRepository {
-  save(manager: TeaHouse): Promise<TeaHouse>;
-  findById(): Promise<TeaHouse>;
+  store(teaHouse: TeaHouse): Promise<TeaHouse>;
+  findById(id: string): Promise<TeaHouse>;
 }

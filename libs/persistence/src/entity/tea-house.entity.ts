@@ -1,4 +1,8 @@
-import { TeaHouseSchedule } from '@domain/domain/tea-house/entity/tea-house';
+import {
+  TeaHouse,
+  TeaHouseSchedule,
+  TeaHouseStatus,
+} from '@domain/domain/tea-house/entity/tea-house';
 import { Type } from 'class-transformer';
 import {
   Column,
@@ -9,7 +13,7 @@ import {
   UpdateDateColumn,
 } from 'typeorm';
 
-export class TeaHouseAddress {
+class TeaHouseAddress {
   @Column()
   address: string;
 
@@ -25,8 +29,8 @@ export class TeaHouseEntity {
   @PrimaryColumn()
   teaHouseId: string;
 
-  @Column()
-  managerId: string;
+  @Column({ nullable: true })
+  managerId?: string;
 
   @Column()
   name: string;
@@ -35,26 +39,29 @@ export class TeaHouseEntity {
   @Column()
   teaHouseAddress: TeaHouseAddress;
 
-  @Column()
-  teaHouseContractNumber: string;
+  @Column({ nullable: true })
+  teaHouseContractNumber?: string;
 
   @Column()
   categoryOfBusiness: string;
 
-  @Column()
-  isRepresentative: boolean;
-
   @Column({ type: 'json' })
   schedule: TeaHouseSchedule;
 
-  @Column()
-  businessLicenseCopy: string;
+  @Column({ nullable: true })
+  businessLicenseCopy?: string;
+
+  @Column({ nullable: true })
+  isRepresentative?: boolean;
+
+  @Column({ nullable: true })
+  instagramUrl?: string;
+
+  @Column({ nullable: true })
+  etcLinkUrl?: string;
 
   @Column()
-  instagramUrl: string;
-
-  @Column()
-  etcLinkUrl: string;
+  status: TeaHouseStatus;
 
   @CreateDateColumn()
   createdAt: Date;
@@ -62,6 +69,10 @@ export class TeaHouseEntity {
   @UpdateDateColumn()
   updatedAt: Date;
 
-  @DeleteDateColumn({ nullable: true })
-  deletedAt: Date | null;
+  @DeleteDateColumn()
+  deletedAt?: Date;
+
+  toDomain(): TeaHouse {
+    return new TeaHouse(this);
+  }
 }

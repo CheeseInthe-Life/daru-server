@@ -18,42 +18,18 @@
     "forceConsistentCasingInFileNames": false,
     "noFallthroughCasesInSwitch": false,
     "paths": {
-      "@domain/domain": [
-        "libs/domain/src"
-      ],
-      "@domain/domain/*": [
-        "libs/domain/src/*"
-      ],
-      "@infra/persistence": [
-        "libs/persistence/src"
-      ],
-      "@infra/persistence/*": [
-        "libs/persistence/src/*"
-      ],
-      "@infra/aws": [
-        "libs/aws/src"
-      ],
-      "@infra/aws/*": [
-        "libs/aws/src/*"
-      ],
-      "@infra/auth-strategy": [
-        "libs/auth-strategy/src"
-      ],
-      "@infra/auth-strategy/*": [
-        "libs/auth-strategy/src/*"
-      ],
-      "@infra/kakao": [
-        "libs/kakao/src"
-      ],
-      "@infra/kakao/*": [
-        "libs/kakao/src/*"
-      ],
-      "@infra/naver": [
-        "libs/naver/src"
-      ],
-      "@infra/naver/*": [
-        "libs/naver/src/*"
-      ]
+      "@domain/domain": ["libs/domain/src"],
+      "@domain/domain/*": ["libs/domain/src/*"],
+      "@infra/persistence": ["libs/persistence/src"],
+      "@infra/persistence/*": ["libs/persistence/src/*"],
+      "@infra/aws": ["libs/aws/src"],
+      "@infra/aws/*": ["libs/aws/src/*"],
+      "@infra/auth-strategy": ["libs/auth-strategy/src"],
+      "@infra/auth-strategy/*": ["libs/auth-strategy/src/*"],
+      "@infra/kakao": ["libs/kakao/src"],
+      "@infra/kakao/*": ["libs/kakao/src/*"],
+      "@infra/naver": ["libs/naver/src"],
+      "@infra/naver/*": ["libs/naver/src/*"]
     }
   }
 }
