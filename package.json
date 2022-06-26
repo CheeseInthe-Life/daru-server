@@ -8,8 +8,10 @@
   "scripts": {
     "prebuild": "rimraf dist",
     "build": "nest build",
+    "prebuild:customer": "yarn",
     "build:customer": "nest build customer",
     "postbuild:customer": "pm2 reload --update-env apps/customer/ecosystem.yaml",
+    "prebuild:manager": "yarn",
     "build:manager": "nest build manager",
     "postbuild:manager": "pm2 reload --update-env apps/manager/ecosystem.yaml",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",

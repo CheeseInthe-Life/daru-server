@@ -3,13 +3,13 @@ import {
   AccountEntity,
   ProviderChannelEnum,
 } from '@infra/persistence/entity/account.entity';
-import { ApiProperty } from '@nestjs/swagger';
-import { Optional } from 'apps/common-type';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import {
   IsBoolean,
   IsEnum,
   IsNumber,
   IsNumberString,
+  IsOptional,
   IsString,
 } from 'class-validator';
 
@@ -23,9 +23,10 @@ export class SignUpRequestDto {
   @ApiProperty()
   @IsString()
   nickname: string;
-  @ApiProperty({ enum: UserGenderEnum })
+  @ApiPropertyOptional({ enum: UserGenderEnum })
+  @IsOptional()
   @IsEnum(UserGenderEnum)
-  gender: Optional<UserGenderEnum>;
+  gender?: UserGenderEnum;
   @ApiProperty()
   @IsNumberString({ length: 4 })
   birthYear: string;
