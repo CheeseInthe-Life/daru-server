@@ -2,10 +2,10 @@ import { Module } from '@nestjs/common';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { TypeOrmModule, TypeOrmModuleOptions } from '@nestjs/typeorm';
-import databaseConfig from 'configuration/database.config';
+import databaseConfig from 'common/configuration/database.config';
 import { AppController } from '../presentation/root/app/app.controller';
 import { AuthApplicationModule } from './auth.module';
-import { validate } from 'configuration/manager.env.validation';
+import { validate } from 'common/configuration/manager.env.validation';
 
 @Module({
   imports: [

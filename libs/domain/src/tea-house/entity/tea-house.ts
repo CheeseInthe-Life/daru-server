@@ -12,6 +12,7 @@ export class TeaHouse {
   instagramUrl?: string;
   etcLinkUrl?: string;
   status: TeaHouseStatus;
+  coordinate?: TeaHouseCoordinate;
   createdAt?: Date;
   updatedAt?: Date;
   deletedAt?: Date;
@@ -28,6 +29,7 @@ export class TeaHouse {
     isRepresentative,
     instagramUrl,
     etcLinkUrl,
+    coordinate,
     createdAt,
     updatedAt,
     deletedAt,
@@ -45,6 +47,7 @@ export class TeaHouse {
     instagramUrl?: string;
     etcLinkUrl?: string;
     status: TeaHouseStatus;
+    coordinate?: TeaHouseCoordinate;
     createdAt?: Date;
     updatedAt?: Date;
     deletedAt?: Date;
@@ -61,6 +64,7 @@ export class TeaHouse {
     this.instagramUrl = instagramUrl;
     this.etcLinkUrl = etcLinkUrl;
     this.status = status;
+    this.coordinate = coordinate;
     this.createdAt = createdAt;
     this.updatedAt = updatedAt;
     this.deletedAt = deletedAt;
@@ -145,10 +149,35 @@ export class TeaHouseSchedule {
   };
 }
 
+export enum CityEnum {
+  서울 = 'SEOUL',
+  부산 = 'BUSAN',
+  대구 = 'DEAGU',
+  인천 = 'INCHEON',
+  광주 = 'GANJU',
+  대전 = 'DAEJEON',
+  울산 = 'ULSAN',
+  경기 = 'GYEONGI',
+  강원 = 'GANGWON',
+  충북 = 'CHUNGBUK',
+  충남 = 'CHUNGNAM',
+  전북 = 'JEONBUK',
+  전남 = 'JEONNAM',
+  경북 = 'GYEONGBUK',
+  경남 = 'GYEONGNAM',
+  제주 = 'JEJU',
+}
+
 export class TeaHouseAddress {
   address: string;
   detailAddress: string;
   postcode: string;
+  city: CityEnum;
+}
+
+export class TeaHouseCoordinate {
+  latitude: number;
+  longitude: number;
 }
 
 export enum TeaHouseStatus {
@@ -169,4 +198,5 @@ export class ModifyTeaHouse {
   isRepresentative?: boolean;
   instagramUrl?: string;
   etcLinkUrl?: string;
+  coordinate?: TeaHouseCoordinate;
 }

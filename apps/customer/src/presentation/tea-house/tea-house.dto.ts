@@ -11,9 +11,11 @@ export class TeaHouseAddressDto {
   detailAddress: string;
   @ApiProperty()
   postcode: string;
+  @ApiProperty()
+  city: string;
 }
 
-class Schedule {
+class ScheduleDto {
   @ApiProperty()
   isWork: boolean;
   @ApiProperty()
@@ -24,19 +26,19 @@ class Schedule {
 
 export class TeaHouseScheduleDto {
   @ApiProperty()
-  monday: Schedule;
+  monday: ScheduleDto;
   @ApiProperty()
-  tuesday: Schedule;
+  tuesday: ScheduleDto;
   @ApiProperty()
-  wednesday: Schedule;
+  wednesday: ScheduleDto;
   @ApiProperty()
-  thursday: Schedule;
+  thursday: ScheduleDto;
   @ApiProperty()
-  friday: Schedule;
+  friday: ScheduleDto;
   @ApiProperty()
-  saturday: Schedule;
+  saturday: ScheduleDto;
   @ApiProperty()
-  sunday: Schedule;
+  sunday: ScheduleDto;
   @ApiProperty()
   etc?: {
     contents: string;

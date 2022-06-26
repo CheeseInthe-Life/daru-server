@@ -1,7 +1,6 @@
 import { LocalDateTime } from '@js-joda/core';
 import { HttpStatus } from '@nestjs/common';
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { Nullable } from 'apps/common-type';
 
 export enum Result {
   SUCCESS = 'SUCCESS',
@@ -12,25 +11,25 @@ export class CommonResponse<T> {
   @ApiProperty()
   result: Result;
   @ApiProperty()
-  data: Nullable<T>;
+  data?: T | null;
   @ApiPropertyOptional({ type: String })
-  message: Nullable<string>;
+  message?: string | null;
   @ApiProperty({ type: Number, example: 200 })
   statusCode: HttpStatus;
   @ApiPropertyOptional({ type: String })
-  name: Nullable<string>;
+  name?: string | null;
   @ApiProperty()
   timestamp: string;
 
   private constructor({
-    data,
+    data = null,
     statusCode,
     message = null,
     result,
   }: {
     result: Result;
-    data: Nullable<T>;
-    message: Nullable<string>;
+    data?: T | null;
+    message?: string | null;
     statusCode: HttpStatus;
   }) {
     this.result = result;

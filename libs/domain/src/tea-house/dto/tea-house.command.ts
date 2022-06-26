@@ -1,6 +1,7 @@
 import {
   TeaHouse,
   TeaHouseAddress,
+  TeaHouseCoordinate,
   TeaHouseSchedule,
   TeaHouseStatus,
 } from '../entity/tea-house';
@@ -17,6 +18,7 @@ export class TeaHouseRegisterRequestCommand {
   isRepresentative: boolean;
   instagramUrl?: string;
   etcLinkUrl?: string;
+  coordinate?: TeaHouseCoordinate;
 
   toEntity(): TeaHouse {
     return new TeaHouse({
@@ -32,6 +34,7 @@ export class TeaHouseRegisterRequestCommand {
       businessLicenseCopy: this.businessLicenseCopy,
       isRepresentative: this.isRepresentative,
       status: TeaHouseStatus.관리등록신청,
+      coordinate: this.coordinate,
     });
   }
 }

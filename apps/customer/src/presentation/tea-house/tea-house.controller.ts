@@ -1,8 +1,8 @@
 import { Controller, Get, HttpCode, HttpStatus } from '@nestjs/common';
 import { ApiTags } from '@nestjs/swagger';
+import { ApiCommonResponse } from 'common/decorator/api-common-response.decorator';
 import { TeaHouseFacade } from '../../application/tea-house.facade';
-import { CommonResponse } from '../common/response/common-response';
-import { ApiCommonResponse } from '../documentation/api-common-response.decorator';
+import { CommonResponse } from '../../../../../common/response/common-response';
 import { TeaHouseMainDto } from './tea-house.dto';
 
 @ApiTags('tea-house')
@@ -12,7 +12,7 @@ export class TeaHouseController {
 
   @Get()
   @HttpCode(HttpStatus.OK)
-  @ApiCommonResponse(TeaHouseMainDto)
+  @ApiCommonResponse('object', TeaHouseMainDto)
   async retrieveTeaHouseList(): Promise<CommonResponse<TeaHouseMainDto[]>> {
     return CommonResponse.success(
       (await this.TeaHouseFacade.retrieveTeaHouseList()).map(

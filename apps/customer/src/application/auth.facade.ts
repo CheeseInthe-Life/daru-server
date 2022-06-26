@@ -22,7 +22,7 @@ import { UserAlreadyRegisterException } from '../presentation/common/exception/u
 import { UserDIToken } from '@domain/domain/user/di/user.token';
 import { UserService } from '@domain/domain/user/service/user.service';
 import { RegisterUserCommand } from '@domain/domain/user/dto/user.command';
-import { UnauthorizedExceptionMessage } from '../presentation/common/constant/error-message';
+import { UnauthorizedExceptionMessage } from '../../../../common/constant/error-message';
 
 export interface JwtPayload {
   userId: string;

@@ -1,11 +1,11 @@
-import { NotificationDiToken } from '@domain/domain/interface/di/notification.token';
+import { NotificationDIToken } from '@domain/domain/interface/di/notification.service.token';
 import { HttpModule } from '@nestjs/axios';
 import { Module, Provider } from '@nestjs/common';
 import { NotificationServiceImpl } from './notification.service';
 
 const serviceProviders: Provider[] = [
   {
-    provide: NotificationDiToken.NotificationService,
+    provide: NotificationDIToken.NotificationService,
     useClass: NotificationServiceImpl,
   },
 ];

@@ -5,7 +5,7 @@ import { CommonResponse } from '../../../../../common/response/common-response';
 export const swaggerLoader = (application: INestApplication) => {
   const config = new DocumentBuilder()
     .setTitle('Daru Customer API')
-    .setDescription('이 문서는 DARU의 고객 서비스용 API 문서입니다.')
+    .setDescription('이 문서는 DARU의 사장님용 API 문서입니다.')
     .setVersion('1.0.0')
     .build();
 

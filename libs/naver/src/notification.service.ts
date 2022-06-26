@@ -1,8 +1,8 @@
 import 'dotenv/config';
 import { HttpService } from '@nestjs/axios';
-import { Injectable } from '@nestjs/common';
+import { Injectable, Logger } from '@nestjs/common';
 import { AxiosRequestConfig } from 'axios';
-import crypto from 'crypto';
+import * as cryptoJs from 'crypto-js';
 import { lastValueFrom } from 'rxjs';
 import { SMSException } from './sms.exception';
 import {
@@ -15,7 +15,6 @@ const {
   NAVER_ACCESS_KEY,
   NAVER_SECRET,
   NAVER_SMS_SERVICE_ID,
-  NAVER_SMS_SERVICE_SECRET,
   NAVER_SMS_FROM_AUTH_NUMBER,
 } = process.env;
 
@@ -48,13 +47,15 @@ export type NaverSendSMSResultStatusCode =
 
 @Injectable()
 export class NotificationServiceImpl implements NotificationService {
-  private readonly smsHost: string = 'https://sens.apigw.ntruss.com/sms/v2';
+  private readonly smsHost: string = 'https://sens.apigw.ntruss.com';
+  private readonly path = `/sms/v2/services/${NAVER_SMS_SERVICE_ID}/messages`;
 
   constructor(private readonly httpService: HttpService) {}
 
   async sendSms({ to, content }: SMS): Promise<SendSMSResult> {
-    const sendHost = `${this.smsHost}/services/${NAVER_SMS_SERVICE_ID}/messages`;
+    const sendHost = `${this.smsHost}${this.path}`;
     const requestTimestamp = Date.now().toString();
+    const signature = this.makeSignature(requestTimestamp);
 
     const data: NaverSendSMSRequestBody = {
       type: 'SMS',
@@ -69,18 +70,18 @@ export class NotificationServiceImpl implements NotificationService {
     };
 
     const axiosConfig: AxiosRequestConfig = {
+      method: 'POST',
+      url: sendHost,
       headers: {
         'Content-Type': 'application/json; charset=utf-8',
-        'x-ncp-apigw-timestamp': requestTimestamp,
         'x-ncp-iam-access-key': NAVER_ACCESS_KEY as string,
-        'x-ncp-apigw-signature-v2': this.makeSignature(requestTimestamp),
+        'x-ncp-apigw-timestamp': requestTimestamp,
+        'x-ncp-apigw-signature-v2': signature,
       },
       data,
     };
 
-    const result = await lastValueFrom(
-      this.httpService.post(sendHost, axiosConfig),
-    );
+    const result = await lastValueFrom(this.httpService.request(axiosConfig));
 
     const naverResult: NaverSendSMSResult = result.data;
 
@@ -94,21 +95,22 @@ export class NotificationServiceImpl implements NotificationService {
     const space = ' '; // one space
     const newLine = '\n'; // new line
     const method = 'POST'; // method
-    const url = `/services/${NAVER_SMS_SERVICE_ID as string}/messages`;
+    const url = this.path; // url (include query string)
+    const timestamp = requestTimestamp; // current timestamp (epoch)
+    const accessKey = NAVER_ACCESS_KEY as string; // access key id (from portal or Sub Account)
+    const secretKey = NAVER_SECRET as string; // secret key (from portal or Sub Account)
 
-    const message = [
-      method,
-      space,
-      url,
-      newLine,
-      requestTimestamp,
-      space,
-      NAVER_ACCESS_KEY as string,
-    ];
+    const hmac = cryptoJs.algo.HMAC.create(cryptoJs.algo.SHA256, secretKey);
+    hmac.update(method);
+    hmac.update(space);
+    hmac.update(url);
+    hmac.update(newLine);
+    hmac.update(timestamp);
+    hmac.update(newLine);
+    hmac.update(accessKey);
 
-    return crypto
-      .createHmac('sha256', NAVER_SECRET as string)
-      .update(message.join(' '))
-      .digest('base64');
+    const hash = hmac.finalize();
+
+    return hash.toString(cryptoJs.enc.Base64);
   }
 }

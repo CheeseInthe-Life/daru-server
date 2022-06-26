@@ -1,7 +1,7 @@
 import { ConnectionOptions } from 'typeorm';
 import { join } from 'path';
 
-import register from './configuration/database.config';
+import register from './common/configuration/database.config';
 
 // Check typeORM documentation for more information.
 export default {

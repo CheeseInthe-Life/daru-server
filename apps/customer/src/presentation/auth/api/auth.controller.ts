@@ -12,9 +12,10 @@ import {
 import { AuthGuard } from '@nestjs/passport';
 import { ApiExcludeEndpoint, ApiTags } from '@nestjs/swagger';
 import { AuthFacade } from 'apps/customer/src/application/auth.facade';
+import { ApiCommonResponse } from 'common/decorator/api-common-response.decorator';
 import { Request } from 'express';
-import { ApiCommonResponse } from '../../documentation/api-common-response.decorator';
-import { CommonResponse } from '../../common/response/common-response';
+
+import { CommonResponse } from '../../../../../../common/response/common-response';
 
 import {
   SignInRequestDto,
@@ -51,7 +52,7 @@ export class AuthController {
 
   @Post('users/nickname/verification')
   @HttpCode(HttpStatus.OK)
-  @ApiCommonResponse(UserNicknameValidationResponseDto)
+  @ApiCommonResponse('object', UserNicknameValidationResponseDto)
   public async validateNickname(
     @Body() dto: UserNicknameValidationRequestDto,
   ): Promise<CommonResponse<UserNicknameValidationResponseDto>> {
@@ -60,7 +61,7 @@ export class AuthController {
 
   @Post('sign-in')
   @HttpCode(HttpStatus.OK)
-  @ApiCommonResponse(TokenPairDto)
+  @ApiCommonResponse('object', TokenPairDto)
   public async signInUser(
     @Body() dto: SignInRequestDto,
   ): Promise<CommonResponse<TokenPairDto>> {
@@ -70,7 +71,7 @@ export class AuthController {
 
   @Post('sign-up')
   @HttpCode(HttpStatus.OK)
-  @ApiCommonResponse(TokenPairDto)
+  @ApiCommonResponse('object', TokenPairDto)
   public async signUpUser(
     @Body() dto: SignUpRequestDto,
   ): Promise<CommonResponse<TokenPairDto>> {

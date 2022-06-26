@@ -8,7 +8,7 @@ import { AxiosRequestConfig, AxiosRequestHeaders } from 'axios';
 import { HttpService } from '@nestjs/axios';
 import { lastValueFrom } from 'rxjs';
 import { KakaoServiceException } from './kakao-server-exception';
-import { UnauthorizedExceptionMessage } from 'apps/customer/src/presentation/common/constant/error-message';
+import { UnauthorizedExceptionMessage } from 'common/constant/error-message';
 
 export interface KakaoResponse {
   id: number;

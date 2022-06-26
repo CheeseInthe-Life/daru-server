@@ -57,6 +57,18 @@ class EnvironmentVariables {
 
   @IsString()
   NAVER_SMS_FROM_AUTH_NUMBER: string;
+
+  @IsString()
+  AWS_ACCESS_KEY: string;
+
+  @IsString()
+  AWS_SECRET_KEY: string;
+
+  @IsString()
+  AWS_BUCKET_REGION: string;
+
+  @IsString()
+  AWS_BUCKET_NAME: string;
 }
 
 export function validate(config: Record<string, unknown>) {

@@ -1,9 +1,10 @@
 import {
+  CityEnum,
   TeaHouse,
   TeaHouseSchedule,
   TeaHouseStatus,
 } from '@domain/domain/tea-house/entity/tea-house';
-import { Type } from 'class-transformer';
+
 import {
   Column,
   CreateDateColumn,
@@ -12,6 +13,14 @@ import {
   PrimaryColumn,
   UpdateDateColumn,
 } from 'typeorm';
+
+class TeaHouseCoordinate {
+  @Column({ nullable: true })
+  latitude: number;
+
+  @Column({ nullable: true })
+  longitude: number;
+}
 
 class TeaHouseAddress {
   @Column()
@@ -22,6 +31,9 @@ class TeaHouseAddress {
 
   @Column()
   postcode: string;
+
+  @Column({ type: 'enum', enum: CityEnum })
+  city: CityEnum;
 }
 
 @Entity('tea_house')
@@ -63,6 +75,11 @@ export class TeaHouseEntity {
 
   @Column()
   status: TeaHouseStatus;
+
+  @Column(() => TeaHouseCoordinate, {
+    prefix: false,
+  })
+  coordinate?: TeaHouseCoordinate;
 
   @CreateDateColumn()
   createdAt: Date;

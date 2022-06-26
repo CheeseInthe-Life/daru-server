@@ -1,4 +1,5 @@
 import { LocalDate, LocalDateTime, nativeJs } from '@js-joda/core';
+import { Logger } from '@nestjs/common';
 
 export class DateTimeUtil {
   static toLocalDateTime(date: Date | string): LocalDateTime {
@@ -17,7 +18,8 @@ export class DateTimeUtil {
     );
   }
 
-  static toDate(date: LocalDateTime | LocalDate): Date {
-    return new Date(date.toString());
+  static toDate(date: LocalDateTime | LocalDate): Date | null {
+    if (date) return new Date(date.toString());
+    else return null;
   }
 }

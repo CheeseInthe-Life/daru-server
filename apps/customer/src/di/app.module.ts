@@ -5,9 +5,9 @@ import { AppController } from '../presentation/root/app/app.controller';
 import { AuthApplicationModule } from './auth.module';
 import { UserApplicationModule } from './user.module';
 import { JwtModule } from '@nestjs/jwt';
-import databaseConfig from 'configuration/database.config';
-import { validate } from 'configuration/customer.env.validation';
-import customerJwtConfig from 'configuration/customer.jwt.config';
+import databaseConfig from 'common/configuration/database.config';
+import { validate } from 'common/configuration/customer.env.validation';
+import customerJwtConfig from 'common/configuration/customer.jwt.config';
 import { TeaHouseApplicationModule } from './tea-house.module';
 @Module({
   imports: [
