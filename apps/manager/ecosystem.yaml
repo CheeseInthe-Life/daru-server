@@ -1,0 +1,8 @@
+apps:
+  - script: ./dist/apps/manager/apps/manager/src/main.js
+    name: 'DARU_MANAGER_API_SERVER'
+    watch: true
+    wait_ready: true
+    listen_timeout: 5000
+    exec_mode: 'cluster'
+    instances: 1,

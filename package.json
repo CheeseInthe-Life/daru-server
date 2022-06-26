@@ -10,6 +10,8 @@
     "build": "nest build",
     "build:customer": "nest build customer",
     "postbuild:customer": "pm2 reload --update-env apps/customer/ecosystem.yaml",
+    "build:manager": "nest build manager",
+    "postbuild:manager": "pm2 reload --update-env apps/manager/ecosystem.yaml",
     "format": "prettier --write \"apps/**/*.ts\" \"libs/**/*.ts\"",
     "start": "nest start",
     "start:customer": "nest start customer --watch",
