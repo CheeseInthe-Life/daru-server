@@ -1,3 +1,4 @@
+import { RegisterManagerCommand } from '@domain/domain/manager/dto/manager.command';
 import { ManagerGenderEnum } from '@domain/domain/manager/entity/manager';
 import { CellphoneVerificationEntity } from '@infra/persistence/entity/cellphone-verification.entity';
 import { LocalDate } from '@js-joda/core';

@@ -9,16 +9,18 @@ import { ManagerEntity } from '../entity/manager.entity';
 export class ManagerRepositoryImpl implements ManagerRepository {
   constructor(
     @InjectRepository(ManagerEntity)
-    private readonly userRepository: Repository<ManagerEntity>,
+    private readonly managerRepository: Repository<ManagerEntity>,
   ) {}
 
-  async save(manager: Manager): Promise<Manager> {
-    return this.userRepository.save(manager);
+  async store(manager: Manager): Promise<Manager> {
+    return (await this.managerRepository.save(manager)).toDomain();
   }
 
   async findById(criteria: ManagerByIdCriteria): Promise<Manager> {
-    return await this.userRepository.findOneOrFail({
-      managerId: criteria.managerId,
-    });
+    return (
+      await this.managerRepository.findOneOrFail({
+        managerId: criteria.managerId,
+      })
+    ).toDomain();
   }
 }

@@ -1,4 +1,5 @@
 import { LocalDate } from '@js-joda/core';
+import { Bcrypt } from 'common/util/bcrypt';
 import { ulid } from 'ulid';
 export enum ManagerGenderEnum {
   남성 = 'MALE',
@@ -11,10 +12,10 @@ export class Manager {
   phone: string;
   password: string;
   birthday: LocalDate;
-  gender: ManagerGenderEnum | null;
-  createdAt: Date;
-  updatedAt: Date;
-  deletedAt: Date | null;
+  gender?: ManagerGenderEnum;
+  createdAt?: Date;
+  updatedAt?: Date;
+  deletedAt?: Date;
 
   constructor({
     managerId,
@@ -32,10 +33,10 @@ export class Manager {
     phone: string;
     password: string;
     birthday: LocalDate;
-    gender: ManagerGenderEnum | null;
+    gender?: ManagerGenderEnum;
     createdAt?: Date;
     updatedAt?: Date;
-    deletedAt?: Date | null;
+    deletedAt?: Date;
   }) {
     this.managerId = managerId;
     this.email = email;
@@ -54,14 +55,14 @@ export class Manager {
     phone,
     password,
     birthday,
-    gender = null,
+    gender,
   }: {
     managerId?: string;
     email: string;
     phone: string;
     password: string;
     birthday: LocalDate;
-    gender?: ManagerGenderEnum | null;
+    gender?: ManagerGenderEnum;
   }): Manager {
     return new Manager({
       managerId,
@@ -71,5 +72,9 @@ export class Manager {
       birthday,
       gender,
     });
+  }
+
+  hashPassword() {
+    this.password = Bcrypt.hash(this.password);
   }
 }

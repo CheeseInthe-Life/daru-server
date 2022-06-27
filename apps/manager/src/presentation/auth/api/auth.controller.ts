@@ -1,15 +1,11 @@
-import {
-  Body,
-  Controller,
-  Get,
-  HttpCode,
-  HttpStatus,
-  Post,
-} from '@nestjs/common';
+import { RegisterManagerCommand } from '@domain/domain/manager/dto/manager.command';
+import { Body, Controller, HttpCode, HttpStatus, Post } from '@nestjs/common';
 import { AuthFacade } from 'apps/manager/src/application/auth.facade';
 import { ApiCommonResponse } from 'common/decorator/api-common-response.decorator';
 import { CommonResponse } from 'common/response/common-response';
+import { ManagerMainDto } from '../../manager/api/manager.dto';
 import {
+  RegisterManagerDto,
   SendSmsDto,
   SendSmsResultDto,
   VerifyCodeDto,
@@ -44,9 +40,16 @@ export class AuthController {
     );
   }
 
-  @Get('sign-up')
+  @Post('sign-up')
   @HttpCode(HttpStatus.OK)
-  async signUp(): Promise<void> {
-    return;
+  @ApiCommonResponse('object', ManagerMainDto)
+  async signUp(
+    @Body() dto: RegisterManagerDto,
+  ): Promise<CommonResponse<ManagerMainDto>> {
+    return CommonResponse.success(
+      new ManagerMainDto(
+        await this.authFacade.signUp(RegisterManagerCommand.of(dto)),
+      ),
+    );
   }
 }

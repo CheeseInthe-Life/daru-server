@@ -1,4 +1,5 @@
 import { LocalDate } from '@js-joda/core';
+import { RegisterManagerDto } from 'apps/manager/src/presentation/auth/api/auth.dto';
 import { Manager, ManagerGenderEnum } from '../entity/manager';
 
 export class RegisterManagerCommand {
@@ -6,20 +7,20 @@ export class RegisterManagerCommand {
   phone: string;
   password: string;
   birthday: LocalDate;
-  gender: ManagerGenderEnum | null;
+  gender?: ManagerGenderEnum;
 
   constructor({
     email,
     phone,
     password,
     birthday,
-    gender = null,
+    gender,
   }: {
     email: string;
     phone: string;
     password: string;
     birthday: LocalDate;
-    gender?: ManagerGenderEnum | null;
+    gender?: ManagerGenderEnum;
   }) {
     this.email = email;
     this.phone = phone;
@@ -28,7 +29,22 @@ export class RegisterManagerCommand {
     this.gender = gender;
   }
 
-  toManager(): Manager {
+  static of(dto: {
+    email: string;
+    phone: string;
+    password: string;
+    birthday: LocalDate;
+    gender?: ManagerGenderEnum;
+  }) {
+    return new RegisterManagerCommand({
+      birthday: dto.birthday,
+      email: dto.email,
+      password: dto.password,
+      phone: dto.phone,
+    });
+  }
+
+  toEntity(): Manager {
     return Manager.of({
       email: this.email,
       phone: this.phone,

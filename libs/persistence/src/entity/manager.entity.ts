@@ -1,4 +1,7 @@
-import { ManagerGenderEnum } from '@domain/domain/manager/entity/manager';
+import {
+  Manager,
+  ManagerGenderEnum,
+} from '@domain/domain/manager/entity/manager';
 import { LocalDate } from '@js-joda/core';
 import {
   Column,
@@ -41,4 +44,8 @@ export class ManagerEntity {
 
   @DeleteDateColumn()
   readonly deletedAt?: Date;
+
+  toDomain(): Manager {
+    return new Manager(this);
+  }
 }
